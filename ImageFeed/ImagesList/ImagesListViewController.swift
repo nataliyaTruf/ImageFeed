@@ -8,12 +8,16 @@
 import UIKit
 
 final class ImagesListViewController: UIViewController {
-    
+    private let photosName: [String] = Array(0..<2).map{ "\($0)" }
     @IBOutlet private var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
     
     func configCell(for cell: ImagesListCell) {}
