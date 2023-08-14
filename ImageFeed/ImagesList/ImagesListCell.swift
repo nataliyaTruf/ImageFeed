@@ -14,3 +14,19 @@ final class ImagesListCell: UITableViewCell {
     @IBOutlet var likeButton: UIButton!
     @IBOutlet var dateLabel: UILabel!
 }
+
+extension ImagesListCell {
+    func gradientDateLabel() {
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = [UIColor.ypBlack.withAlphaComponent(0).cgColor, UIColor.ypBlack.withAlphaComponent(0.2).cgColor]
+        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.0)
+        gradientLayer.endPoint = CGPoint(x: 1.0, y: 1.0)
+        gradientLayer.frame = dateLabel.bounds
+        dateLabel.layer.insertSublayer(gradientLayer, at: 0)
+    }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        gradientDateLabel()
+    }
+}
