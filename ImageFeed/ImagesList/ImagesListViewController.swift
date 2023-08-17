@@ -31,8 +31,7 @@ final class ImagesListViewController: UIViewController {
     func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
         guard let image = UIImage(named: photosName[indexPath.row]) else { return }
         cell.cellImage.image = image
-        cell.dateLabel.text = dateFormatter.string(from: Date()).replacingOccurrences(of: "г.", with: "")
-
+        cell.dateLabel.text = dateFormatter.string(from: Date()).replacingOccurrences(of: "г.", with: "")        
         
         let isLiked = indexPath.row % 2 == 1
         let likeImage = isLiked ? UIImage(named: "LikeButtonOn") : UIImage(named: "LikeButtonOff")
