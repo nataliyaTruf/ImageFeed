@@ -81,11 +81,11 @@
 		5CA06F142A72C90A0061813B /* ImageFeed */ = {
 			isa = PBXGroup;
 			children = (
-				5CB87AA82AADFF9300DA4B5F /* SingleImageViewController */,
+				5C232D772A860AD200E16A86 /* ImagesList */,
 				5C2CFA152A8F2E8200E56E54 /* Profile */,
+				5CB87AA82AADFF9300DA4B5F /* SingleImageViewController */,
 				5CF625112A7593EF0039B00D /* Helpers */,
 				5CA06F152A72C90A0061813B /* AppDelegate.swift */,
-				5C232D772A860AD200E16A86 /* ImagesList */,
 				5CA06F172A72C90A0061813B /* SceneDelegate.swift */,
 				5CA06F1B2A72C90A0061813B /* Main.storyboard */,
 				5CA06F1E2A72C90C0061813B /* Assets.xcassets */,
