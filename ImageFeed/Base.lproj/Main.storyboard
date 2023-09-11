@@ -213,6 +213,18 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="0" translatesAutoresizingMaskIntoConstraints="NO" id="wF9-PI-odf">
                                 <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ip4-0N-wdV">
+                                <rect key="frame" x="8" y="59" width="130" height="42"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="42" id="jBu-4Y-ksm"/>
+                                    <constraint firstAttribute="width" constant="130" id="zEo-sM-3dp"/>
+                                </constraints>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" image="Backward_nav_button"/>
+                                <connections>
+                                    <action selector="didTapBackButton" destination="ThR-kh-8LM" eventType="touchUpInside" id="XQn-CB-1di"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="7jO-8N-8kg"/>
                         <color key="backgroundColor" name="YP Black"/>
@@ -220,6 +232,8 @@
                             <constraint firstItem="wF9-PI-odf" firstAttribute="top" secondItem="Keo-x3-hnQ" secondAttribute="top" id="7X2-Ar-1BT"/>
                             <constraint firstAttribute="trailing" secondItem="wF9-PI-odf" secondAttribute="trailing" id="OD0-n3-epC"/>
                             <constraint firstItem="wF9-PI-odf" firstAttribute="leading" secondItem="Keo-x3-hnQ" secondAttribute="leading" id="WUo-53-Liu"/>
+                            <constraint firstItem="Ip4-0N-wdV" firstAttribute="top" secondItem="7jO-8N-8kg" secondAttribute="top" id="cwv-w8-84u"/>
+                            <constraint firstItem="Ip4-0N-wdV" firstAttribute="leading" secondItem="7jO-8N-8kg" secondAttribute="leading" constant="8" id="fbj-5S-06H"/>
                             <constraint firstAttribute="bottom" secondItem="wF9-PI-odf" secondAttribute="bottom" id="mbk-Jr-Pax"/>
                         </constraints>
                     </view>
@@ -230,12 +244,13 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aLU-fd-TKb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3341" y="-1145"/>
+            <point key="canvasLocation" x="3172" y="-1145"/>
         </scene>
     </scenes>
     <resources>
         <image name="0" width="200" height="132"/>
         <image name="Avatar" width="70" height="70"/>
+        <image name="Backward_nav_button" width="24" height="24"/>
         <image name="LikeButtonOn" width="44" height="44"/>
         <image name="LogoutButton" width="44" height="44"/>
         <image name="tab_editorial_active" width="30" height="30"/>
