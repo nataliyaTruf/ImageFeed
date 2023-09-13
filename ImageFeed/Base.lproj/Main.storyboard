@@ -230,10 +230,10 @@
                                 </connections>
                             </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ip4-0N-wdV" userLabel="Back Button">
-                                <rect key="frame" x="8" y="59" width="130" height="42"/>
+                                <rect key="frame" x="8" y="59" width="45" height="45"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="42" id="jBu-4Y-ksm"/>
-                                    <constraint firstAttribute="width" constant="130" id="zEo-sM-3dp"/>
+                                    <constraint firstAttribute="height" constant="45" id="jBu-4Y-ksm"/>
+                                    <constraint firstAttribute="width" constant="45" id="zEo-sM-3dp"/>
                                 </constraints>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" image="Backward_nav_button"/>
@@ -249,6 +249,9 @@
                                 </constraints>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" image="Share Button"/>
+                                <connections>
+                                    <action selector="didTapShareButton:" destination="ThR-kh-8LM" eventType="touchUpInside" id="ehm-eR-h0w"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="7jO-8N-8kg"/>
