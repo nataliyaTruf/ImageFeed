@@ -18,7 +18,7 @@ final class ProfileViewController: UIViewController {
         setupLogoutButton(with: avatarImageView)
     }
     
-    func setupAvatarImageView() -> UIImageView {
+    private func setupAvatarImageView() -> UIImageView {
         let avatarImage = UIImage(named: "Avatar")
         let avatarImageView = UIImageView(image: avatarImage)
         avatarImageView.translatesAutoresizingMaskIntoConstraints = false
