@@ -19,7 +19,6 @@ extension ImagesListCell {
     func gradientDateLabel() {
         let gradientLayer = CAGradientLayer()
         gradientLayer.colors = [UIColor.ypBlack.withAlphaComponent(0.2).cgColor, UIColor.ypBlack.withAlphaComponent(0.0).cgColor]
-//        gradientLayer.locations = [0, 1]
         gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.0)
         gradientLayer.endPoint = CGPoint(x: 1.0, y: 1.0)
         gradientLayer.frame = dateLabel.bounds
@@ -28,6 +27,7 @@ extension ImagesListCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        selectionStyle = .none
         gradientDateLabel()
     }
 }
