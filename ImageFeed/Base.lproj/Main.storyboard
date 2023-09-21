@@ -280,6 +280,10 @@
                                     <wkPreferences key="preferences"/>
                                 </wkWebViewConfiguration>
                             </wkWebView>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="6Eh-kt-2gC">
+                                <rect key="frame" x="0.0" y="101" width="393" height="4"/>
+                                <color key="progressTintColor" name="YP Black"/>
+                            </progressView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xJM-VH-DC6" userLabel="Back Button">
                                 <rect key="frame" x="0.0" y="59" width="46" height="42"/>
                                 <constraints>
@@ -297,14 +301,18 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="5jP-Uu-rs8" secondAttribute="trailing" id="3AJ-ba-jR6"/>
+                            <constraint firstItem="6Eh-kt-2gC" firstAttribute="leading" secondItem="yWK-JB-a0T" secondAttribute="leading" id="Aj8-wM-CLh"/>
                             <constraint firstItem="xJM-VH-DC6" firstAttribute="top" secondItem="yWK-JB-a0T" secondAttribute="top" id="FCH-LY-Iy0"/>
                             <constraint firstItem="5jP-Uu-rs8" firstAttribute="leading" secondItem="eo5-na-lLc" secondAttribute="leading" id="I7v-c7-DvU"/>
                             <constraint firstItem="5jP-Uu-rs8" firstAttribute="top" secondItem="eo5-na-lLc" secondAttribute="top" id="JZs-k8-ISS"/>
                             <constraint firstItem="xJM-VH-DC6" firstAttribute="leading" secondItem="yWK-JB-a0T" secondAttribute="leading" id="Q4O-Ro-Oh6"/>
                             <constraint firstAttribute="bottom" secondItem="5jP-Uu-rs8" secondAttribute="bottom" id="TJ6-pX-ryE"/>
+                            <constraint firstItem="yWK-JB-a0T" firstAttribute="trailing" secondItem="6Eh-kt-2gC" secondAttribute="trailing" id="YlI-4r-pWP"/>
+                            <constraint firstItem="xJM-VH-DC6" firstAttribute="bottom" secondItem="6Eh-kt-2gC" secondAttribute="top" id="b39-z6-NnG"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="progressView" destination="6Eh-kt-2gC" id="bNX-lO-CCt"/>
                         <outlet property="webView" destination="5jP-Uu-rs8" id="Iq0-DW-8uz"/>
                     </connections>
                 </viewController>
