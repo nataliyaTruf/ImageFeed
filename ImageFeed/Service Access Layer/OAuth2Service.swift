@@ -10,7 +10,14 @@ import Foundation
 class OAuth2Service {
     private let shared = OAuth2Service()
     private let urlSession = URLSession.shared
-    private var authToken: String?
+    private (set) var authToken: String? {
+        get {
+            return OAuth2TokenStorage().token
+        }
+        set {
+            OAuth2TokenStorage().token = newValue
+        }
+    }
     
     func fetchAuthToken(
         _ code: String,

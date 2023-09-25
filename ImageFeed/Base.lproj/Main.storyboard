@@ -226,7 +226,7 @@
                                     <constraint firstAttribute="height" constant="60" id="aGD-6I-2rI"/>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kJy-Fb-2Uu" userLabel="Войти Button">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kJy-Fb-2Uu" userLabel="Войтика Button">
                                 <rect key="frame" x="16" y="680" width="361" height="48"/>
                                 <color key="backgroundColor" name="YP White"/>
                                 <constraints>
@@ -262,7 +262,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UJW-SW-S4M" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4959.5419847328239" y="-1142.2535211267607"/>
+            <point key="canvasLocation" x="2294" y="-1889"/>
         </scene>
         <!--Web View View Controller-->
         <scene sceneID="nHZ-gs-jZF">
@@ -318,7 +318,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ooE-3A-0RW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5760" y="-1133"/>
+            <point key="canvasLocation" x="3172" y="-1889"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="qHx-jl-Ecd">
@@ -336,7 +336,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hce-pX-21t" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4032.8244274809158" y="-1142.2535211267607"/>
+            <point key="canvasLocation" x="1305" y="-1889"/>
         </scene>
     </scenes>
     <resources>

@@ -28,8 +28,8 @@ extension AuthViewController: WebViewViewControllerDelegate {
         let oauth2Service = OAuth2Service()
         oauth2Service.fetchAuthToken(code) { result in
             switch result {
-            case .success(let bearerToken):
-                print("Bearer Token: \(bearerToken)")
+            case .success(let authToken):
+               let token = authToken
             case .failure(let error):
                 print("Error fetching Bearer Token: \(error)")
             }
