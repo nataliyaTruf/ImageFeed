@@ -25,7 +25,7 @@ final class WebViewViewController: UIViewController {
     private struct WebConstants {
         static let authorizeURL = "https://unsplash.com/oauth/authorize"
         static let code = "code"
-        static let authorizedPath = "/oauth/autorize/native"
+        static let authorizedPath = "/oauth/authorize/native"
     }
     
     @IBOutlet var webView: WKWebView!
@@ -39,7 +39,6 @@ final class WebViewViewController: UIViewController {
         webView.navigationDelegate = self
         
         loadWebView()
-        
     }
     
     @IBAction func didTapBackButton(_ sender: Any) {
@@ -86,31 +85,17 @@ extension WebViewViewController: WKNavigationDelegate {
         decidePolicyFor navigationAction: WKNavigationAction,
         decisionHandler: @escaping (WKNavigationActionPolicy) -> Void
     ){
-        if let code = fetchCode(from: navigationAction) {
+        if let code = fetchCode(url: navigationAction.request.url) {
             delegate?.webViewViewController(self, didAuthenticateWithCode: code)
             decisionHandler(.cancel)
         } else {
             decisionHandler(.allow)
         }
     }
-    
-    private func fetchCode(from navigationAction: WKNavigationAction) -> String? {
-        if
-            let url = navigationAction.request.url,
-            let urlComponents = URLComponents(string: url.absoluteString),
-            urlComponents.path == WebConstants.authorizedPath,
-            let items = urlComponents.queryItems,
-            let codeItem = items.first(where: {$0.name == WebConstants.code})
-        {
-            return codeItem.value
-        } else {
-            return nil
-        }
-    }
 }
 
 private extension WebViewViewController {
-    func loadWebView () {
+    func loadWebView() {
         var urlComponents = URLComponents(string: WebConstants.authorizeURL)
         urlComponents?.queryItems = [
             URLQueryItem(name: WebKeys.clientID, value: AccessKey),
@@ -122,5 +107,15 @@ private extension WebViewViewController {
             let request = URLRequest(url: url)
             webView.load(request)
         }
+    }
+    
+    func fetchCode(url: URL?) -> String? {
+        guard let url = url,
+              let components = URLComponents(string: url.absoluteString),
+              components.path == WebConstants.authorizedPath,
+              let codeItem = components.queryItems?.first(where: { $0.name == WebConstants.code})
+        else { return nil }
+        
+        return codeItem.value
     }
 }

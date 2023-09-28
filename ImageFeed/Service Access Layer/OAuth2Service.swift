@@ -7,8 +7,8 @@
 
 import Foundation
 
-class OAuth2Service {
-    private let shared = OAuth2Service()
+final class OAuth2Service {
+    static let shared = OAuth2Service()
     private let urlSession = URLSession.shared
     private (set) var authToken: String? {
         get {
@@ -60,7 +60,7 @@ extension OAuth2Service {
             + "&&client_secret=\(SecretKey)"
             + "&&redirect_uri=\(RedirectURI)"
             + "&&code=\(code)"
-            + "&&grant_type=autorization_code",
+            + "&&grant_type=authorization_code",
             httpMethod: "POST",
             baseURL: URL(string: "https://unsplash.com")!
         )

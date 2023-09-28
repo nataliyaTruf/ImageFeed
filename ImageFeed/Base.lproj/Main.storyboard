@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Bz8-8f-ItH">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="OBM-nr-ORs">
     <device id="retina6_12" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -98,10 +98,42 @@
             </objects>
             <point key="canvasLocation" x="2294" y="-1145"/>
         </scene>
+        <!--Splash View Controller-->
+        <scene sceneID="cPJ-dW-Fdl">
+            <objects>
+                <viewController id="OBM-nr-ORs" customClass="SplashViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="GQV-NM-u8c">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splash_screen_logo" translatesAutoresizingMaskIntoConstraints="NO" id="VgU-sc-tue">
+                                <rect key="frame" x="159" y="399.66666666666669" width="75" height="77.666666666666686"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="77.680000000000007" id="Hu2-aL-vOE"/>
+                                    <constraint firstAttribute="width" constant="75" id="lRp-Nc-BCU"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="CPQ-qa-TW4"/>
+                        <color key="backgroundColor" name="YP Black"/>
+                        <constraints>
+                            <constraint firstItem="VgU-sc-tue" firstAttribute="centerY" secondItem="CPQ-qa-TW4" secondAttribute="centerY" id="bm0-as-kzw"/>
+                            <constraint firstItem="VgU-sc-tue" firstAttribute="centerX" secondItem="CPQ-qa-TW4" secondAttribute="centerX" id="kHU-r1-gNf"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <segue destination="eyk-I3-CZ6" kind="presentation" identifier="ShowAuthenticationScreen" modalPresentationStyle="fullScreen" id="vU2-kg-0up"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="PIl-hf-mje" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="440" y="-1381"/>
+        </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="0Rh-Bx-RLE">
             <objects>
-                <tabBarController id="nPj-ip-A2A" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="TabBarViewController" id="nPj-ip-A2A" customClass="TabBarController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="G6a-7W-UHw">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -346,6 +378,7 @@
         <image name="Share Button" width="50.333332061767578" height="50"/>
         <image name="auth_screen_logo" width="60" height="60"/>
         <image name="nav_back_button" width="24" height="24"/>
+        <image name="splash_screen_logo" width="75" height="78"/>
         <image name="tab_editorial_active" width="30" height="30"/>
         <image name="tab_profile_active" width="30" height="30"/>
         <namedColor name="YP Black">
