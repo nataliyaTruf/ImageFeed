@@ -15,17 +15,17 @@ protocol WebViewViewControllerDelegate: AnyObject {
 }
 
 final class WebViewViewController: UIViewController {
-    private struct WebKeys {
-        static let clientID = "client_id"
-        static let redirectURI = "redirect_uri"
-        static let responseType = "response_type"
-        static let scope = "scope"
+    private enum WebKeys {
+        static let clientID: String = "client_id"
+        static let redirectURI: String = "redirect_uri"
+        static let responseType: String = "response_type"
+        static let scope: String = "scope"
     }
     
-    private struct WebConstants {
-        static let authorizeURL = "https://unsplash.com/oauth/authorize"
-        static let code = "code"
-        static let authorizedPath = "/oauth/authorize/native"
+    private enum WebConstants {
+        static let authorizeURL: String = "https://unsplash.com/oauth/authorize"
+        static let code: String = "code"
+        static let authorizedPath: String = "/oauth/authorize/native"
     }
     
     @IBOutlet var webView: WKWebView!
@@ -98,10 +98,10 @@ private extension WebViewViewController {
     func loadWebView() {
         var urlComponents = URLComponents(string: WebConstants.authorizeURL)
         urlComponents?.queryItems = [
-            URLQueryItem(name: WebKeys.clientID, value: AccessKey),
-            URLQueryItem(name: WebKeys.redirectURI, value: RedirectURI),
+            URLQueryItem(name: WebKeys.clientID, value: Constants.accessKey),
+            URLQueryItem(name: WebKeys.redirectURI, value: Constants.redirectURI),
             URLQueryItem(name: WebKeys.responseType, value: WebConstants.code),
-            URLQueryItem(name: WebKeys.scope, value: AccessScope)
+            URLQueryItem(name: WebKeys.scope, value: Constants.accessScope)
         ]
         if let url = urlComponents?.url {
             let request = URLRequest(url: url)
