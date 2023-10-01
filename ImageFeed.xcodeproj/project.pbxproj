@@ -23,6 +23,7 @@
 		5CB87AAA2AADFFD400DA4B5F /* SingleImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB87AA92AADFFD400DA4B5F /* SingleImageViewController.swift */; };
 		5CBF4B3A2ABDB685001C9EAC /* OAuth2Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBF4B392ABDB685001C9EAC /* OAuth2Service.swift */; };
 		5CD2A65C2AC9BBFD0058D619 /* ProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 5CD2A65B2AC9BBFD0058D619 /* ProgressHUD */; };
+		5CD2A65E2AC9CE750058D619 /* UIBlokingProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CD2A65D2AC9CE750058D619 /* UIBlokingProgressHUD.swift */; };
 		5CF625132A7594270039B00D /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF625122A7594270039B00D /* UIColor+Extensions.swift */; };
 /* End PBXBuildFile section */
 
@@ -44,6 +45,7 @@
 		5CAFB9C02AC1A5B30022A77F /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		5CB87AA92AADFFD400DA4B5F /* SingleImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleImageViewController.swift; sourceTree = "<group>"; };
 		5CBF4B392ABDB685001C9EAC /* OAuth2Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuth2Service.swift; sourceTree = "<group>"; };
+		5CD2A65D2AC9CE750058D619 /* UIBlokingProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBlokingProgressHUD.swift; sourceTree = "<group>"; };
 		5CF625122A7594270039B00D /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -143,6 +145,7 @@
 			children = (
 				5CBF4B392ABDB685001C9EAC /* OAuth2Service.swift */,
 				5CAFB9BD2ABEDD4C0022A77F /* OAuth2TokenStorage.swift */,
+				5CD2A65D2AC9CE750058D619 /* UIBlokingProgressHUD.swift */,
 			);
 			path = "Service Access Layer";
 			sourceTree = "<group>";
@@ -233,6 +236,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5CAFB9BE2ABEDD4C0022A77F /* OAuth2TokenStorage.swift in Sources */,
+				5CD2A65E2AC9CE750058D619 /* UIBlokingProgressHUD.swift in Sources */,
 				5C47FF662AB8777C002A83F6 /* WebViewViewController.swift in Sources */,
 				5C2CFA172A8F304600E56E54 /* ProfileViewController.swift in Sources */,
 				5CA06F1A2A72C90A0061813B /* ImagesListViewController.swift in Sources */,
