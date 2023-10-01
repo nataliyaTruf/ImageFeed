@@ -39,12 +39,19 @@ final class OAuth2Service {
     }
 }
 
+final class SnakeCaseJSONDecoder: JSONDecoder {
+    override init() {
+        super.init()
+        keyDecodingStrategy = .convertFromSnakeCase
+    }
+}
+
 extension OAuth2Service {
     private func object(
         for request: URLRequest,
         completion: @escaping (Result <OAuthResponseBody, Error>) -> Void
     ) -> URLSessionTask {
-        let decoder = JSONDecoder()
+        let decoder = SnakeCaseJSONDecoder()
         return urlSession.data(for: request) { (result: Result<Data, Error>) in
             let response = result.flatMap { data -> Result<OAuthResponseBody, Error> in
                 Result { try decoder.decode(OAuthResponseBody.self, from: data) }
@@ -71,13 +78,6 @@ extension OAuth2Service {
         let tokenType: String
         let scope: String
         let createdAt: Int
-        
-        enum CodingKeys: String, CodingKey {
-            case accessToken = "access_token"
-            case tokenType = "token_type"
-            case scope
-            case createdAt = "created_at"
-        }
     }
 }
 
