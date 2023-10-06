@@ -29,7 +29,11 @@ final class OAuth2Service {
         if lastCode == code { return }
         task?.cancel()
         lastCode = code
-        let request = authTokenRequest(code: code)
+        guard let request = authTokenRequest(code: code) else {
+            assertionFailure("Invalid request")
+            completion(.failure(NetworkError.invalidRequest))
+            return
+        }
         let task = object(for: request) { [weak self] result in
             guard let self = self else { return }
             switch result {
@@ -48,13 +52,6 @@ final class OAuth2Service {
     }
 }
 
-final class SnakeCaseJSONDecoder: JSONDecoder {
-    override init() {
-        super.init()
-        keyDecodingStrategy = .convertFromSnakeCase
-    }
-}
-
 extension OAuth2Service {
     private func object(
         for request: URLRequest,
@@ -69,7 +66,7 @@ extension OAuth2Service {
         }
     }
     
-    private func authTokenRequest(code: String) -> URLRequest {
+    private func authTokenRequest(code: String) -> URLRequest? {
         URLRequest.makeHTTPRequest(
             path: "/oauth/token"
             + "?client_id=\(Constants.accessKey)"
@@ -78,67 +75,7 @@ extension OAuth2Service {
             + "&&code=\(code)"
             + "&&grant_type=authorization_code",
             httpMethod: "POST",
-            baseURL: URL(string: "https://unsplash.com")!
+            baseURLString: Constants.baseURLString
         )
-    }
-    
-    private struct OAuthResponseBody: Decodable {
-        let accessToken: String
-        let tokenType: String
-        let scope: String
-        let createdAt: Int
-    }
-}
-
-// MARK: - HTTP Request
-
-extension URLRequest {
-    static func makeHTTPRequest(
-        path: String,
-        httpMethod: String,
-        baseURL: URL = Constants.defaultBaseURL
-    ) -> URLRequest {
-        var request = URLRequest(url: URL(string: path, relativeTo: baseURL)!)
-        request.httpMethod = httpMethod
-        return request
-    }
-}
-
-// MARK: - Network Connection
-
-enum NetworkError: Error {
-    case httpStatusCode(Int)
-    case urlRequestError(Error)
-    case urlSessionError
-}
-
-extension URLSession {
-    func data(
-        for request: URLRequest,
-        completion: @escaping (Result <Data, Error>) -> Void
-    ) -> URLSessionTask {
-        let fulfillCompletion: (Result <Data, Error>) -> Void = { result in
-            DispatchQueue.main.async {
-                completion(result)
-            }
-        }
-        let task = dataTask(with: request) { data, response, error in
-            if let data = data,
-               let response = response,
-               let statusCode = (response as? HTTPURLResponse)?.statusCode
-            {
-                if 200 ..< 300 ~= statusCode {
-                    fulfillCompletion(.success(data))
-                } else {
-                    fulfillCompletion(.failure(NetworkError.httpStatusCode(statusCode)))
-                }
-            } else if let error = error {
-                fulfillCompletion(.failure(NetworkError.urlRequestError(error)))
-            } else {
-                fulfillCompletion(.failure(NetworkError.urlSessionError))
-            }
-        }
-        task.resume()
-        return task
     }
 }
