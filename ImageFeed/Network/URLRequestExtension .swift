@@ -22,6 +22,10 @@ extension URLRequest {
         
         var request = URLRequest(url: baseURL)
         request.httpMethod = httpMethod
+        
+        if let token = OAuth2TokenStorage.shared.token {
+            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        }
         return request
     }
 }
