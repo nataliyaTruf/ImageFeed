@@ -14,10 +14,10 @@ final class ProfileService {
     private(set) var profile: Profile?
     private var task: URLSessionTask?
     
-    private let builder: URLRequestBuilder
+    private let requestBuilder: URLRequestBuilder
     
-    init(builder: URLRequestBuilder = .shared) {
-        self.builder = builder
+    init(requestBuilder: URLRequestBuilder = .shared) {
+        self.requestBuilder = requestBuilder
     }
     
     func fetchProfile(
@@ -61,7 +61,7 @@ extension ProfileService {
         }
     }
     private func profileRequest(token: String) -> URLRequest? {
-        builder.makeHTTPRequest(
+        requestBuilder.makeHTTPRequest(
             path: "/me",
             httpMethod: "GET"
         )

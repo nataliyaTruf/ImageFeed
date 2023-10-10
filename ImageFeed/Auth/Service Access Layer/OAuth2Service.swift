@@ -12,7 +12,7 @@ final class OAuth2Service {
     private let urlSession = URLSession.shared
     private var task: URLSessionTask?
     private var lastCode: String?
-    private let builder: URLRequestBuilder
+    private let requestBuilder: URLRequestBuilder
     private (set) var authToken: String? {
         get {
             return OAuth2TokenStorage().token
@@ -22,8 +22,8 @@ final class OAuth2Service {
         }
     }
     
-    init(builder: URLRequestBuilder = .shared) {
-        self.builder = builder
+    init(requestBuilder: URLRequestBuilder = .shared) {
+        self.requestBuilder = requestBuilder
     }
     
     func fetchAuthToken(
@@ -72,7 +72,7 @@ extension OAuth2Service {
     }
     
     private func authTokenRequest(code: String) -> URLRequest? {
-        builder.makeHTTPRequest(
+        requestBuilder.makeHTTPRequest(
             path: "/oauth/token"
             + "?client_id=\(Constants.accessKey)"
             + "&&client_secret=\(Constants.secretKey)"
