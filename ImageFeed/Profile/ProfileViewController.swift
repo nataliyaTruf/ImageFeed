@@ -108,7 +108,9 @@ final class ProfileViewController: UIViewController {
 
 extension ProfileViewController {
     func updateProfileDetails() {
-        guard let profile = profileService.profile else { return }
+        guard let profile = profileService.profile
+        else { assertionFailure("no saved profile")
+            return }
         self.nameLabel.text = profile.name
         self.loginNameLabel.text = profile.loginName
         self.descriptionLabel.text = profile.bio

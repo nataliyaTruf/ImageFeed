@@ -16,15 +16,20 @@ final class SplashViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+       checkAuthTokenAndFetchProfile()
+    }
+}
+
+private extension SplashViewController {
+    func checkAuthTokenAndFetchProfile() {
         if let token = oauth2TokenStorage.token {
-            switchToTabBarController()
+           fetchProfile()
         } else {
             performSegue(withIdentifier: showAuthenticationScreenSegueIdentifier, sender: nil)
         }
     }
     
-    private func switchToTabBarController() {
+    func switchToTabBarController() {
         guard let window = UIApplication.shared.windows.first else { fatalError("Invalid Configuration") }
         let tabBarController = UIStoryboard(name: "Main", bundle: .main)
             .instantiateViewController(withIdentifier: "TabBarViewController")
@@ -52,6 +57,7 @@ extension SplashViewController: AuthViewControllerDelegate {
             guard let self = self else { return }
             UIBlokingProgressHUD.show()
             self.fetchOAuthToken(code)
+            self.checkAuthTokenAndFetchProfile()
         }
     }
     
@@ -59,8 +65,8 @@ extension SplashViewController: AuthViewControllerDelegate {
         oauth2Service.fetchAuthToken(code) { [weak self] result in
             guard let self = self else { return }
             switch result {
-            case .success(let token):
-                self.fetchProfile(token: token)
+            case .success:
+                self.fetchProfile()
             case.failure:
                 // TODO [Sprint 11]
                 UIBlokingProgressHUD.dismiss()
@@ -69,8 +75,8 @@ extension SplashViewController: AuthViewControllerDelegate {
         }
     }
     
-    private func fetchProfile(token: String) {
-        profileServive.fetchProfile(token) { [weak self] result in
+    private func fetchProfile() {
+        profileServive.fetchProfile() { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success:
