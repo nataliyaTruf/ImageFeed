@@ -9,6 +9,8 @@ import UIKit
 
 final class ProfileViewController: UIViewController {
     private let profileService = ProfileService.shared
+    private let profileImageService = ProfileImageService.shared
+    private var profileImageServiceObserver: NSObjectProtocol?
     
     // MARK: - UI Elements
     
@@ -57,6 +59,17 @@ final class ProfileViewController: UIViewController {
         addSubviews()
         makeConstraints()        
         updateProfileDetails()
+        
+        profileImageServiceObserver = NotificationCenter.default
+            .addObserver(
+                forName: ProfileImageService.DidChangeNotification,
+                object: nil,
+                queue: .main
+            ) { [weak self] _ in
+                guard let self = self else { return }
+                self.updateAvatar()
+            }
+        updateAvatar()
     }
     
     // MARK: - Private Methods
@@ -106,7 +119,7 @@ final class ProfileViewController: UIViewController {
     }
 }
 
-extension ProfileViewController {
+private extension ProfileViewController {
     func updateProfileDetails() {
         guard let profile = profileService.profile
         else { assertionFailure("no saved profile")
@@ -114,5 +127,13 @@ extension ProfileViewController {
         self.nameLabel.text = profile.name
         self.loginNameLabel.text = profile.loginName
         self.descriptionLabel.text = profile.bio
+    }
+    
+    func updateAvatar() {
+        guard
+            let profileImageURLString = profileImageService.avatarURL,
+            let url = URL(string: profileImageURLString)
+        else { return }
+        // TODO [Sprint 11] Обновить аватар, испотльзуя Kingfisher 
     }
 }

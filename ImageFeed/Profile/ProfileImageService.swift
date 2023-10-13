@@ -9,6 +9,7 @@ import Foundation
 
 final class ProfileImageService {
     static let shared = ProfileImageService()
+    static let DidChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")
     private let urlSession = URLSession.shared
     private(set) var avatarURL: String?
     private var task: URLSessionTask?
@@ -34,9 +35,14 @@ final class ProfileImageService {
             guard let self = self else { return }
             switch result {
             case .success(let profilPhoto):
-                guard let smallImage = profilPhoto.profileImage?.small else { return }
-                self.avatarURL = smallImage
-                completion(.success(smallImage))
+                guard let profileImageURLString = profilPhoto.profileImage?.small else { return }
+                self.avatarURL = profileImageURLString
+                completion(.success(profileImageURLString))
+                NotificationCenter.default
+                    .post(
+                        name: ProfileImageService.DidChangeNotification,
+                        object: self,
+                        userInfo: ["URL": profileImageURLString])
                 self.task = nil
             case .failure(let error):
                 completion(.failure(error))
