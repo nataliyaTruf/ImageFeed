@@ -14,17 +14,29 @@ final class SplashViewController: UIViewController {
     private let oauth2TokenStorage = OAuth2TokenStorage()
     private let profileServive = ProfileService.shared
     private let profileImageService = ProfileImageService.shared
+    private let alertPresenter = AlertPresenter()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        alertPresenter.delegate = self
+    }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-       checkAuthTokenAndFetchProfile()
+        checkAuthTokenAndFetchProfile()
     }
 }
 
 private extension SplashViewController {
+    func showLoginAlert(error: Error) {
+        alertPresenter.showAlert(title: "Что-то пошло не так :(",
+                                 message: "Не удалось войти в систему: \(error.localizedDescription)") {
+            self.performSegue(withIdentifier: self.showAuthenticationScreenSegueIdentifier, sender: nil)            
+        }
+    }
     func checkAuthTokenAndFetchProfile() {
         if let token = oauth2TokenStorage.token {
-           fetchProfile()
+            fetchProfile()
         } else {
             performSegue(withIdentifier: showAuthenticationScreenSegueIdentifier, sender: nil)
         }
@@ -68,9 +80,9 @@ extension SplashViewController: AuthViewControllerDelegate {
             switch result {
             case .success:
                 self.fetchProfile()
-            case.failure:
-                // TODO [Sprint 11]
+            case.failure(let error):
                 UIBlokingProgressHUD.dismiss()
+                self.showLoginAlert(error: error)
                 break
             }
         }
@@ -85,9 +97,9 @@ extension SplashViewController: AuthViewControllerDelegate {
                 guard let username = self.profileServive.profile?.username else { return }
                 self.profileImageService.fetchProfileImageURL(username: username) { _ in }
                 self.switchToTabBarController()
-            case .failure:
+            case .failure(let error):
                 UIBlokingProgressHUD.dismiss()
-                // TODO [Sprint 11] показать алерт ошибки
+                self.showLoginAlert(error: error)
                 break
             }
         }

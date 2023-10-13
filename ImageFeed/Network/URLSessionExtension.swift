@@ -57,3 +57,10 @@ extension URLSession {
         return task
     }
 }
+
+final class SnakeCaseJSONDecoder: JSONDecoder {
+    override init() {
+        super.init()
+        keyDecodingStrategy = .convertFromSnakeCase
+    }
+}
