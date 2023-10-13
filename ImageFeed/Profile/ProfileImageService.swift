@@ -35,7 +35,7 @@ final class ProfileImageService {
             guard let self = self else { return }
             switch result {
             case .success(let profilPhoto):
-                guard let profileImageURLString = profilPhoto.profileImage?.small else { return }
+                guard let profileImageURLString = profilPhoto.profileImage?.large else { return } // поменяла размер на large
                 self.avatarURL = profileImageURLString
                 completion(.success(profileImageURLString))
                 NotificationCenter.default
