@@ -31,7 +31,7 @@ final class ProfileImageService {
             completion(.failure(NetworkError.invalidRequest))
             return
         }
-        let task = object(for: request) { [weak self] result in
+        let task = urlSession.objectTask(for: request) { [weak self] (result: Result <UserResult, Error>) in
             guard let self = self else { return }
             switch result {
             case .success(let profilPhoto):
@@ -54,18 +54,6 @@ final class ProfileImageService {
 }
 
 extension ProfileImageService {
-    private func object(
-        for request: URLRequest,
-        completion: @escaping (Result <UserResult, Error>) -> Void
-    ) -> URLSessionTask {
-        let decoder = SnakeCaseJSONDecoder()
-        return urlSession.data(for: request) { (result: Result<Data, Error>) in
-            let response = result.flatMap { data -> Result<UserResult, Error> in
-                Result { try decoder.decode(UserResult.self, from: data) }
-            }
-            completion(response)
-        }
-    }
     private func profileImageRequest(username: String) -> URLRequest? {
         requestBuilder.makeHTTPRequest(
             path: "/users/\(username)",

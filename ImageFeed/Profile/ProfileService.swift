@@ -28,7 +28,7 @@ final class ProfileService {
             completion(.failure(NetworkError.invalidRequest))
             return
         }
-        let task = object(for: request) { [weak self] result in
+        let task = urlSession.objectTask(for: request) { [weak self] (result: Result<ProfileResult, Error>) in
             guard let self = self else { return }
           
             switch result {
@@ -47,18 +47,6 @@ final class ProfileService {
 }
 
 extension ProfileService {
-    private func object(
-        for request: URLRequest,
-        completion: @escaping (Result <ProfileResult, Error>) -> Void
-    ) -> URLSessionTask {
-        let decoder = SnakeCaseJSONDecoder()
-        return urlSession.data(for: request) { (result: Result<Data, Error>) in
-            let response = result.flatMap { data -> Result<ProfileResult, Error> in
-                Result { try decoder.decode(ProfileResult.self, from: data) }
-            }
-            completion(response)
-        }
-    }
     private func profileRequest() -> URLRequest? {
         requestBuilder.makeHTTPRequest(
             path: "/me",
