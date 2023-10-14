@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5C1C2B9A2ADACE7800C1A1B6 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1C2B992ADACE7800C1A1B6 /* TabBarViewController.swift */; };
 		5C232D7B2A860C7E00E16A86 /* ImagesListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C232D7A2A860C7E00E16A86 /* ImagesListCell.swift */; };
 		5C2CFA172A8F304600E56E54 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2CFA162A8F304600E56E54 /* ProfileViewController.swift */; };
 		5C47FF612AB75C05002A83F6 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C47FF602AB75C05002A83F6 /* Constants.swift */; };
@@ -39,6 +40,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5C1C2B992ADACE7800C1A1B6 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		5C232D7A2A860C7E00E16A86 /* ImagesListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListCell.swift; sourceTree = "<group>"; };
 		5C2CFA162A8F304600E56E54 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		5C47FF602AB75C05002A83F6 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -83,6 +85,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5C1C2B982ADACE3B00C1A1B6 /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				5C1C2B992ADACE7800C1A1B6 /* TabBarViewController.swift */,
+			);
+			path = TabBar;
+			sourceTree = "<group>";
+		};
 		5C232D772A860AD200E16A86 /* ImagesList */ = {
 			isa = PBXGroup;
 			children = (
@@ -151,6 +161,7 @@
 		5CA06F142A72C90A0061813B /* ImageFeed */ = {
 			isa = PBXGroup;
 			children = (
+				5C1C2B982ADACE3B00C1A1B6 /* TabBar */,
 				5C758B082ACFEF8F0058A9A0 /* Models */,
 				5C758AFF2ACEEE8B0058A9A0 /* Network */,
 				5CAFB9BF2AC1A56A0022A77F /* SplashViewController */,
@@ -302,6 +313,7 @@
 				5C232D7B2A860C7E00E16A86 /* ImagesListCell.swift in Sources */,
 				5C758B072ACFEF300058A9A0 /* OAuthResponseBody.swift in Sources */,
 				5CAA4F5B2AD972CF005A04FC /* AlertPresenter.swift in Sources */,
+				5C1C2B9A2ADACE7800C1A1B6 /* TabBarViewController.swift in Sources */,
 				5CA06F182A72C90A0061813B /* SceneDelegate.swift in Sources */,
 				5C758B0A2ACFFEEA0058A9A0 /* ProfileService.swift in Sources */,
 				5CF625132A7594270039B00D /* UIColor+Extensions.swift in Sources */,
