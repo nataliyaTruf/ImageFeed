@@ -62,16 +62,7 @@ final class ProfileViewController: UIViewController {
         addSubviews()
         makeConstraints()
         updateProfileDetails()
-        
-        profileImageServiceObserver = NotificationCenter.default
-            .addObserver(
-                forName: ProfileImageService.DidChangeNotification,
-                object: nil,
-                queue: .main
-            ) { [weak self] _ in
-                guard let self = self else { return }
-                self.updateAvatar()
-            }
+        profileImageObserver()
         updateAvatar()
     }
     
@@ -123,6 +114,18 @@ final class ProfileViewController: UIViewController {
 }
 
 private extension ProfileViewController {
+    func profileImageObserver() {
+        profileImageServiceObserver = NotificationCenter.default
+            .addObserver(
+                forName: ProfileImageService.DidChangeNotification,
+                object: nil,
+                queue: .main
+            ) { [weak self] _ in
+                guard let self = self else { return }
+                self.updateAvatar()
+            }
+    }
+    
     func updateProfileDetails() {
         guard let profile = profileService.profile
         else { assertionFailure("no saved profile")

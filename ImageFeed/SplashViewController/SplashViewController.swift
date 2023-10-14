@@ -16,9 +16,17 @@ final class SplashViewController: UIViewController {
     private let profileImageService = ProfileImageService.shared
     private let alertPresenter = AlertPresenter()
     
+    private lazy var splashImageView: UIImageView = {
+        let splashImage = UIImage(named: "splash_screen_logo")
+        let splashImageView = UIImageView(image: splashImage)
+        splashImageView.contentMode = .scaleAspectFit
+        return splashImageView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         alertPresenter.delegate = self
+        setUpSplashImageView()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -31,14 +39,15 @@ private extension SplashViewController {
     func showLoginAlert(error: Error) {
         alertPresenter.showAlert(title: "Что-то пошло не так :(",
                                  message: "Не удалось войти в систему: \(error.localizedDescription)") {
-            self.performSegue(withIdentifier: self.showAuthenticationScreenSegueIdentifier, sender: nil)            
+            self.presentAuthViewController()
         }
     }
+    
     func checkAuthTokenAndFetchProfile() {
-        if let token = oauth2TokenStorage.token {
+        if oauth2TokenStorage.token != nil {
             fetchProfile()
         } else {
-            performSegue(withIdentifier: showAuthenticationScreenSegueIdentifier, sender: nil)
+            presentAuthViewController()
         }
     }
     
@@ -50,17 +59,24 @@ private extension SplashViewController {
     }
 }
 
-extension SplashViewController {
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == showAuthenticationScreenSegueIdentifier {
-            guard
-                let navigationController = segue.destination as? UINavigationController,
-                let viewController = navigationController.viewControllers[0] as? AuthViewController
-            else { fatalError("Failed to prepare for \(showAuthenticationScreenSegueIdentifier)") }
-            viewController.delegate = self
-        } else {
-            super.prepare(for: segue, sender: sender)
-        }
+private extension SplashViewController {
+    func setUpSplashImageView() {
+        view.addSubview(splashImageView)
+        splashImageView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            splashImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            splashImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            splashImageView.widthAnchor.constraint(equalToConstant: 75),
+            splashImageView.heightAnchor.constraint(equalToConstant: 77.68)
+        ])
+    }
+    
+    func presentAuthViewController() {
+        guard let authViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController
+        else { return }
+        authViewController.delegate = self
+        authViewController.modalPresentationStyle = .fullScreen
+        self.present(authViewController, animated: true, completion: nil)
     }
 }
 
