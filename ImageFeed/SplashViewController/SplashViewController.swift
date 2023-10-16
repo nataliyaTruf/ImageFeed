@@ -25,6 +25,7 @@ final class SplashViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         alertPresenter.delegate = self
+        view.backgroundColor = UIColor.ypBlack
         setUpSplashImageView()
     }
     
