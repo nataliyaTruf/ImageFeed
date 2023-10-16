@@ -6,8 +6,12 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class ProfileViewController: UIViewController {
+    private let profileService = ProfileService.shared
+    private let profileImageService = ProfileImageService.shared
+    private var profileImageServiceObserver: NSObjectProtocol?
     
     // MARK: - UI Elements
     
@@ -15,6 +19,8 @@ final class ProfileViewController: UIViewController {
         let avatarImage = UIImage(named: "Avatar")
         let avatarImageView = UIImageView(image: avatarImage)
         avatarImageView.backgroundColor = .clear
+        avatarImageView.layer.cornerRadius = avatarImageView.frame.size.width / 2
+        avatarImageView.clipsToBounds = true
         return avatarImageView
     }()
     
@@ -55,6 +61,9 @@ final class ProfileViewController: UIViewController {
         super.viewDidLoad()
         addSubviews()
         makeConstraints()
+        updateProfileDetails()
+        profileImageObserver()
+        updateAvatar()
     }
     
     // MARK: - Private Methods
@@ -97,10 +106,49 @@ final class ProfileViewController: UIViewController {
             logoutButton.leadingAnchor.constraint(greaterThanOrEqualTo: avatarImageView.trailingAnchor)
         ])
     }
-
+    
     @objc
     private func didTapButton() {
         
     }
 }
 
+private extension ProfileViewController {
+    func profileImageObserver() {
+        profileImageServiceObserver = NotificationCenter.default
+            .addObserver(
+                forName: ProfileImageService.DidChangeNotification,
+                object: nil,
+                queue: .main
+            ) { [weak self] _ in
+                guard let self = self else { return }
+                self.updateAvatar()
+            }
+    }
+    
+    func updateProfileDetails() {
+        guard let profile = profileService.profile
+        else { assertionFailure("no saved profile")
+            return }
+        nameLabel.text = profile.name
+        loginNameLabel.text = profile.loginName
+        descriptionLabel.text = profile.bio
+    }
+    
+    func updateAvatar() {
+        guard
+            let profileImageURLString = profileImageService.avatarURL,
+            let url = URL(string: profileImageURLString)
+        else { return }
+        let processor = RoundCornerImageProcessor(cornerRadius: 70, backgroundColor: .clear)
+        avatarImageView.kf.indicatorType = .activity
+        avatarImageView.kf.setImage(
+            with: url,
+            placeholder: UIImage(named: "avatar_placeholder"),
+            options: [.processor(processor)]
+        )
+        let cache = ImageCache.default
+        cache.clearMemoryCache()
+        cache.clearDiskCache()
+    }
+}
