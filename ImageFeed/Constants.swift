@@ -15,4 +15,6 @@ enum Constants {
     
     static let defaultApiBaseURLString: String = "https://api.unsplash.com"
     static let baseURLString: String = "https://unsplash.com"
+    
+    static let bearerToken = "BearerToken"
 }

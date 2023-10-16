@@ -11,14 +11,11 @@ import Foundation
 final class ProfileService {
     static let shared = ProfileService()
     private let urlSession = URLSession.shared
+    private let requestBuilder = URLRequestBuilder.shared
     private(set) var profile: Profile?
     private var task: URLSessionTask?
-    
-    private let requestBuilder: URLRequestBuilder
-    
-    init(requestBuilder: URLRequestBuilder = .shared) {
-        self.requestBuilder = requestBuilder
-    }
+   
+    private init() {}
     
     func fetchProfile(completion: @escaping (Result <Profile, Error>) -> Void) {
         assert(Thread.isMainThread)

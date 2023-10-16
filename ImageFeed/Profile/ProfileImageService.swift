@@ -11,14 +11,11 @@ final class ProfileImageService {
     static let shared = ProfileImageService()
     static let DidChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")
     private let urlSession = URLSession.shared
+    private let requestBuilder = URLRequestBuilder.shared
     private(set) var avatarURL: String?
     private var task: URLSessionTask?
     
-    private let requestBuilder: URLRequestBuilder
-    
-    init(requestBuilder: URLRequestBuilder = .shared) {
-        self.requestBuilder = requestBuilder
-    }
+    private init() {}
     
     func fetchProfileImageURL(
         username: String,

@@ -19,7 +19,7 @@ final class ProfileViewController: UIViewController {
         let avatarImage = UIImage(named: "Avatar")
         let avatarImageView = UIImageView(image: avatarImage)
         avatarImageView.backgroundColor = .clear
-        avatarImageView.layer.cornerRadius = 35
+        avatarImageView.layer.cornerRadius = avatarImageView.frame.size.width / 2
         avatarImageView.clipsToBounds = true
         return avatarImageView
     }()
@@ -130,9 +130,9 @@ private extension ProfileViewController {
         guard let profile = profileService.profile
         else { assertionFailure("no saved profile")
             return }
-        self.nameLabel.text = profile.name
-        self.loginNameLabel.text = profile.loginName
-        self.descriptionLabel.text = profile.bio
+        nameLabel.text = profile.name
+        loginNameLabel.text = profile.loginName
+        descriptionLabel.text = profile.bio
     }
     
     func updateAvatar() {

@@ -10,8 +10,7 @@ import ProgressHUD
 
 final class SplashViewController: UIViewController {
     private let showAuthenticationScreenSegueIdentifier = "ShowAuthenticationScreen"
-    private let oauth2Service = OAuth2Service()
-    private let oauth2TokenStorage = OAuth2TokenStorage()
+    private let oauth2Service = OAuth2Service.shared
     private let profileServive = ProfileService.shared
     private let profileImageService = ProfileImageService.shared
     private let alertPresenter = AlertPresenter()
@@ -31,6 +30,8 @@ final class SplashViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        guard UIBlokingProgressHUD.isShowing == false else { return }
         checkAuthTokenAndFetchProfile()
     }
 }
@@ -38,13 +39,13 @@ final class SplashViewController: UIViewController {
 private extension SplashViewController {
     func showLoginAlert(error: Error) {
         alertPresenter.showAlert(title: "Что-то пошло не так :(",
-                                 message: "Не удалось войти в систему: \(error.localizedDescription)") {
-            self.presentAuthViewController()
+                                 message: "Не удалось войти в систему: \(error.localizedDescription)") { [weak self] in
+            self?.presentAuthViewController()
         }
     }
     
     func checkAuthTokenAndFetchProfile() {
-        if oauth2TokenStorage.token != nil {
+        if oauth2Service.isAuthenticated {
             fetchProfile()
         } else {
             presentAuthViewController()
@@ -73,7 +74,10 @@ private extension SplashViewController {
     
     func presentAuthViewController() {
         guard let authViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController
-        else { return }
+        else {
+            assertionFailure("Failed to show Authentication Screen")
+            return
+    }
         authViewController.delegate = self
         authViewController.modalPresentationStyle = .fullScreen
         self.present(authViewController, animated: true, completion: nil)

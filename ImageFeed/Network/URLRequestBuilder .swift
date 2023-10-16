@@ -10,11 +10,9 @@ import Foundation
 final class URLRequestBuilder {
     static let shared = URLRequestBuilder()
     
-    private let storage: OAuth2TokenStorage
+    private let storage = OAuth2TokenStorage.shared
     
-    init(storage: OAuth2TokenStorage = .shared) {
-        self.storage = storage
-    }
+    private init() {}
     
     func makeHTTPRequest(
         path: String,

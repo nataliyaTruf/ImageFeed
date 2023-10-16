@@ -10,21 +10,25 @@ import Foundation
 final class OAuth2Service {
     static let shared = OAuth2Service()
     private let urlSession = URLSession.shared
+    private let storage = OAuth2TokenStorage.shared
+    private let requestBuilder = URLRequestBuilder.shared
     private var task: URLSessionTask?
     private var lastCode: String?
-    private let requestBuilder: URLRequestBuilder
+    
+    var isAuthenticated: Bool {
+        storage.token != nil
+    }
+    
     private (set) var authToken: String? {
         get {
-            return OAuth2TokenStorage().token
+            return storage.token
         }
         set {
-            OAuth2TokenStorage().token = newValue
+            storage.token = newValue
         }
     }
     
-    init(requestBuilder: URLRequestBuilder = .shared) {
-        self.requestBuilder = requestBuilder
-    }
+    private init() {}
     
     func fetchAuthToken(
         _ code: String,
