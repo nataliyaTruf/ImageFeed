@@ -29,17 +29,17 @@ final class ImagesListViewController: UIViewController {
         }
     }
     
-    private lazy var dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .long
-        formatter.timeStyle = .none
-        return formatter
-    }()
+//    private lazy var dateFormatter: DateFormatter = {
+//        let formatter = DateFormatter()
+//        formatter.dateStyle = .long
+//        formatter.timeStyle = .none
+//        return formatter
+//    }()
 
     private func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
         guard let image = UIImage(named: photosName[indexPath.row]) else { return }
         cell.cellImage.image = image
-        cell.dateLabel.text = dateFormatter.string(from: Date()).replacingOccurrences(of: "г.", with: "")        
+        cell.dateLabel.text = DateFormatterUtil.dateFormatter.string(from: Date()).replacingOccurrences(of: "г.", with: "")        
         
         let isLiked = indexPath.row % 2 == 1
         let likeImage = isLiked ? UIImage(named: "LikeButtonOn") : UIImage(named: "LikeButtonOff")
