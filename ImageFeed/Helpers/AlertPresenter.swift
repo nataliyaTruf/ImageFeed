@@ -2,7 +2,7 @@
 //  AlertPresenter.swift
 //  ImageFeed
 //
-//  Created by Nataliya MASSOL on 13/10/2023.
+//  Created by Created by Nataliya TRUFANOVA on 13/10/2023.
 //
 
 import UIKit

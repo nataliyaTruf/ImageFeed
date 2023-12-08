@@ -2,7 +2,7 @@
 //  URLRequestExtension .swift
 //  ImageFeed
 //
-//  Created by Nataliya MASSOL on 05/10/2023.
+//  Created by Created by Nataliya TRUFANOVA on 05/10/2023.
 //
 
 import Foundation

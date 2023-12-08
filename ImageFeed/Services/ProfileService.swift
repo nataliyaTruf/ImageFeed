@@ -2,7 +2,7 @@
 //  ProfileService.swift
 //  ImageFeed
 //
-//  Created by Nataliya MASSOL on 06/10/2023.
+//  Created by Created by Nataliya TRUFANOVA on 06/10/2023.
 //
 
 import Foundation

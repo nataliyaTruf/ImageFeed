@@ -2,7 +2,7 @@
 //  Constants.swift
 //  ImageFeed
 //
-//  Created by Nataliya MASSOL on 17/09/2023.
+//  Created by Created by Nataliya TRUFANOVA on 17/09/2023.
 //
 
 import Foundation

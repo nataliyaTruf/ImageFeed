@@ -2,7 +2,7 @@
 //  UserResult.swift
 //  ImageFeed
 //
-//  Created by Nataliya MASSOL on 10/10/2023.
+//  Created by Created by Nataliya TRUFANOVA on 10/10/2023.
 //
 
 import Foundation

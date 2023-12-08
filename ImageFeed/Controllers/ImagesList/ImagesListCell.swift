@@ -2,10 +2,11 @@
 //  ImagesListCell.swift
 //  ImageFeed
 //
-//  Created by Nataliya MASSOL on 11/08/2023.
+//  Created by Created by Nataliya TRUFANOVA on 11/08/2023.
 //
 
 import UIKit
+import Kingfisher
 
 final class ImagesListCell: UITableViewCell {
     static let reuseIdentifier = "ImagesListCell"
@@ -29,5 +30,13 @@ extension ImagesListCell {
         super.awakeFromNib()
         selectionStyle = .none
         gradientDateLabel()
+    }
+}
+
+extension ImagesListCell {
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        cellImage.kf.cancelDownloadTask()
     }
 }

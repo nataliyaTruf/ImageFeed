@@ -2,7 +2,7 @@
 //  UIBlokingProgressHUD.swift
 //  ImageFeed
 //
-//  Created by Nataliya MASSOL on 01/10/2023.
+//  Created by Created by Nataliya TRUFANOVA on 01/10/2023.
 //
 
 import UIKit

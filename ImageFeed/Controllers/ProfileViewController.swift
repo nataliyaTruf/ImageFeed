@@ -2,7 +2,7 @@
 //  ProfileViewController.swift
 //  ImageFeed
 //
-//  Created by Nataliya MASSOL on 18/08/2023.
+//  Created by Created by Nataliya TRUFANOVA on 18/08/2023.
 //
 
 import UIKit
@@ -62,7 +62,7 @@ final class ProfileViewController: UIViewController {
         addSubviews()
         makeConstraints()
         updateProfileDetails()
-        profileImageObserver()
+        profileImageObserve()
         updateAvatar()
     }
     
@@ -113,8 +113,8 @@ final class ProfileViewController: UIViewController {
     }
 }
 
-private extension ProfileViewController {
-    func profileImageObserver() {
+extension ProfileViewController {
+    func profileImageObserve() {
         profileImageServiceObserver = NotificationCenter.default
             .addObserver(
                 forName: ProfileImageService.DidChangeNotification,

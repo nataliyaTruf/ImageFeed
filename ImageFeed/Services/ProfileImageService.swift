@@ -2,7 +2,7 @@
 //  ProfileImageService.swift
 //  ImageFeed
 //
-//  Created by Nataliya MASSOL on 10/10/2023.
+//  Created by Nataliya TRUFANOVA on 10/10/2023.
 //
 
 import Foundation
@@ -18,14 +18,14 @@ final class ProfileImageService {
     private init() {}
     
     func fetchProfileImageURL(
-        username: String,
-        completion: @escaping (Result<String,Error>) -> Void
+        username: String
+        // completion: @escaping (Result<String,Error>) -> Void
     ) {
         assert(Thread.isMainThread)
         task?.cancel()
         guard let request = profileImageRequest(username: username) else {
-            assertionFailure("Invalid request")
-            completion(.failure(NetworkError.invalidRequest))
+            assertionFailure("\(NetworkError.invalidRequest)")
+           //  completion(.failure(NetworkError.invalidRequest))
             return
         }
         let task = urlSession.objectTask(for: request) { [weak self] (result: Result <UserResult, Error>) in
@@ -34,7 +34,7 @@ final class ProfileImageService {
             case .success(let profilPhoto):
                 guard let profileImageURLString = profilPhoto.profileImage?.large else { return } // поменяла размер на large
                 self.avatarURL = profileImageURLString
-                completion(.success(profileImageURLString))
+                // completion(.success(profileImageURLString))
                 NotificationCenter.default
                     .post(
                         name: ProfileImageService.DidChangeNotification,
@@ -42,7 +42,8 @@ final class ProfileImageService {
                         userInfo: ["URL": profileImageURLString])
                 self.task = nil
             case .failure(let error):
-                completion(.failure(error))
+                //completion(.failure(error))
+                assertionFailure(error.localizedDescription)
             }
         }
         self.task = task

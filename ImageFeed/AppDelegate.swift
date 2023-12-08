@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  ImageFeed
 //
-//  Created by Nataliya MASSOL on 27/07/2023.
+//  Created by Nataliya TRUFANOVA on 27/07/2023.
 //
 
 import UIKit

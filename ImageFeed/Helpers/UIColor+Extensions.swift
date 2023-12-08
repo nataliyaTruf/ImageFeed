@@ -2,7 +2,7 @@
 //  UIColor+Extensions.swift
 //  ImageFeed
 //
-//  Created by Nataliya MASSOL on 29/07/2023.
+//  Created by Created by Nataliya TRUFANOVA on 29/07/2023.
 //
 
 import UIKit

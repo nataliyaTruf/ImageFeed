@@ -2,7 +2,7 @@
 //  OAuth2Service.swift
 //  ImageFeed
 //
-//  Created by Nataliya MASSOL on 22/09/2023.
+//  Created by Created by Nataliya TRUFANOVA on 22/09/2023.
 //
 
 import Foundation
