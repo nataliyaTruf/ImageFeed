@@ -7,11 +7,9 @@
 
 import Foundation
 
-struct DateFormatterUtil {
-    static let dateFormatter: DateFormatter = {
+    let dateFormatterUtil: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .long
         formatter.timeStyle = .none
         return formatter
     }()
-}

@@ -7,6 +7,8 @@
 
 import Foundation
 
+let dateFormater = ISO8601DateFormatter()
+
 struct Photo {
     let id: String
     let size: CGSize
@@ -34,15 +36,19 @@ struct UrlsResult: Codable {
 
 extension Photo {
     init(result photo: PhotoResult) {
-//        let size = CGSize(width: CGFloat(photo.height), height: CGFloat(photo.height))
-//        let createdAt = DateFormatterUtil.dateFormatter.date(from: photo.createdAt ?? "")
-//
+        //        let size = CGSize(width: CGFloat(photo.height), height: CGFloat(photo.height))
+        //        let createdAt = DateFormatterUtil.dateFormatter.date(from: photo.createdAt ?? "")
+        //
         self.init(id: photo.id,
                   size: CGSize(width: CGFloat(photo.height), height: CGFloat(photo.height)),
-                  createdAt: DateFormatterUtil.dateFormatter.date(from: photo.createdAt ?? ""),
+                  createdAt: dateFormater.date(from: photo.createdAt ?? ""),
                   welcomeDescription: photo.description ?? "",
                   thumbImageURL: photo.urls.thumb,
                   largeImageURL: photo.urls.full,
                   isLiked: photo.likedByUser)
     }
+}
+
+struct Like: Codable {
+    let photo: PhotoResult?
 }

@@ -19,13 +19,11 @@ final class ProfileImageService {
     
     func fetchProfileImageURL(
         username: String
-        // completion: @escaping (Result<String,Error>) -> Void
     ) {
         assert(Thread.isMainThread)
         task?.cancel()
         guard let request = profileImageRequest(username: username) else {
             assertionFailure("\(NetworkError.invalidRequest)")
-           //  completion(.failure(NetworkError.invalidRequest))
             return
         }
         let task = urlSession.objectTask(for: request) { [weak self] (result: Result <UserResult, Error>) in
@@ -42,7 +40,6 @@ final class ProfileImageService {
                         userInfo: ["URL": profileImageURLString])
                 self.task = nil
             case .failure(let error):
-                //completion(.failure(error))
                 assertionFailure(error.localizedDescription)
             }
         }
@@ -60,3 +57,9 @@ extension ProfileImageService {
     }
 }
 
+extension ProfileImageService {
+    func clearProfileImageData() {
+        task?.cancel()
+        avatarURL = nil
+    }
+}

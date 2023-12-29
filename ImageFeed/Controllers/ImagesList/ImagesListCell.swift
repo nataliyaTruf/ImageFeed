@@ -8,12 +8,25 @@
 import UIKit
 import Kingfisher
 
+protocol ImageListCellDelegate: AnyObject {
+    func imagesListDidTapLike(_ cell: ImagesListCell)
+}
+
 final class ImagesListCell: UITableViewCell {
     static let reuseIdentifier = "ImagesListCell"
     
+    weak var delegate: ImageListCellDelegate?
     @IBOutlet var cellImage: UIImageView!
     @IBOutlet var likeButton: UIButton!
     @IBOutlet var dateLabel: UILabel!
+    
+    @IBAction private func likeButtonClicked() {
+        delegate?.imagesListDidTapLike(self)
+    }
+    func setIsLike(_ isLiked: Bool) {
+        let likeImage = isLiked ? UIImage(named: "LikeButtonOn") : UIImage(named: "LikeButtonOff")
+        likeButton.setImage(likeImage, for: .normal)
+    }
 }
 
 extension ImagesListCell {
