@@ -14,7 +14,7 @@ final class ProfileService {
     private let requestBuilder = URLRequestBuilder.shared
     private(set) var profile: Profile?
     private var task: URLSessionTask?
-   
+    
     private init() {}
     
     func fetchProfile(completion: @escaping (Result <Profile, Error>) -> Void) {
@@ -52,3 +52,9 @@ extension ProfileService {
     }
 }
 
+extension ProfileService {
+    func clearProfileData() {
+        task?.cancel()
+        profile = nil
+    }
+}

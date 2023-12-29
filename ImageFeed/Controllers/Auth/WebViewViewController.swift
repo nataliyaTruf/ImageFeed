@@ -52,13 +52,13 @@ final class WebViewViewController: UIViewController {
         estimatedProgressObservation = webView.observe(
             \.estimatedProgress,
              options: [],
-            changeHandler: { [weak self] _, _ in
-                guard let self = self else { return }
-                self.updateProgress()
-            })
+             changeHandler: { [weak self] _, _ in
+                 guard let self = self else { return }
+                 self.updateProgress()
+             })
         updateProgress()
     }
-    
+ 
     private func updateProgress() {
         progressView.progress = Float(webView.estimatedProgress)
         progressView.isHidden = fabs(webView.estimatedProgress - 1.0) <= 0.0001
@@ -103,5 +103,16 @@ private extension WebViewViewController {
         else { return nil }
         
         return codeItem.value
+    }
+}
+
+extension WebViewViewController {
+    static func clean() {
+        HTTPCookieStorage.shared.removeCookies(since: Date.distantPast)
+        WKWebsiteDataStore.default().fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()){ records in
+            records.forEach { record in
+                WKWebsiteDataStore.default().removeData(ofTypes: record.dataTypes, for: [record], completionHandler: {})
+            }
+        }
     }
 }

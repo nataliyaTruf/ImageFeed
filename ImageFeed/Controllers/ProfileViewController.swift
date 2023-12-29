@@ -12,6 +12,10 @@ final class ProfileViewController: UIViewController {
     private let profileService = ProfileService.shared
     private let profileImageService = ProfileImageService.shared
     private var profileImageServiceObserver: NSObjectProtocol?
+    private var imagesListService = ImagesListService.shared
+    private var token = OAuth2TokenStorage.shared
+    private let alertPresenter = AlertPresenter()
+    private let splashViewController = SplashViewController()
     
     // MARK: - UI Elements
     
@@ -52,6 +56,7 @@ final class ProfileViewController: UIViewController {
         let logoutButton = UIButton()
         let logoutButtonImage = UIImage(named: "logout_button")
         logoutButton.setImage(logoutButtonImage, for: .normal)
+        logoutButton.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
         return logoutButton
     }()
     
@@ -64,6 +69,8 @@ final class ProfileViewController: UIViewController {
         updateProfileDetails()
         profileImageObserve()
         updateAvatar()
+        
+        alertPresenter.delegate = self
     }
     
     // MARK: - Private Methods
@@ -107,9 +114,8 @@ final class ProfileViewController: UIViewController {
         ])
     }
     
-    @objc
-    private func didTapButton() {
-        
+    @objc private func didTapButton() {
+        showLogoutAlert()
     }
 }
 
@@ -150,5 +156,23 @@ extension ProfileViewController {
         let cache = ImageCache.default
         cache.clearMemoryCache()
         cache.clearDiskCache()
+    }
+}
+
+extension ProfileViewController {
+    private func performLogautAndSwitchToSplashView() {
+        WebViewViewController.clean()
+        token.clearTokenData()
+        profileService.clearProfileData()
+        profileImageService.clearProfileImageData()
+        imagesListService.clearImagesListData()
+        
+        splashViewController.modalPresentationStyle = .fullScreen
+        present(splashViewController, animated: true, completion: nil)
+    }
+    func showLogoutAlert() {
+        alertPresenter.showLogoutAlert() { [weak self] in
+            self?.performLogautAndSwitchToSplashView()
+        }
     }
 }
