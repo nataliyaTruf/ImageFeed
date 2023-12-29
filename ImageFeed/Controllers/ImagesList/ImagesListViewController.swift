@@ -9,7 +9,6 @@ import UIKit
 import Kingfisher
 
 final class ImagesListViewController: UIViewController {
-    private let photosName: [String] = Array(0..<20).map{ "\($0)" }
     private(set) var photos: [Photo] = []
     private let imagesListService = ImagesListService.shared
     private var isInitialDataLoaded = false
@@ -19,8 +18,6 @@ final class ImagesListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if !isInitialDataLoaded {
-             loadInitialPhotos() }
         imagesListObserve()
         
         tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
@@ -30,19 +27,14 @@ final class ImagesListViewController: UIViewController {
         if segue.identifier == ShowSingleImageSegueIdentifier {
             let viewController = segue.destination as! SingleImageViewController
             let indexPath = sender as! IndexPath
-            let image = UIImage(named: photosName[indexPath.row])
-            viewController.image = image
+            let photo = photos[indexPath.row]
+            if let fullImageURL = URL(string: photo.largeImageURL) {
+                viewController.fullImageURL = fullImageURL
+            }
         } else {
             super.prepare(for: segue, sender: sender)
         }
     }
-    
-    //    private lazy var dateFormatter: DateFormatter = {
-    //        let formatter = DateFormatter()
-    //        formatter.dateStyle = .long
-    //        formatter.timeStyle = .none
-    //        return formatter
-    //    }()
     
     private func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
         let photo = photos[indexPath.row]
@@ -56,11 +48,13 @@ final class ImagesListViewController: UIViewController {
                 }
             )
         }
-        cell.dateLabel.text = DateFormatterUtil.dateFormatter.string(from: Date()).replacingOccurrences(of: "г.", with: "")
-        
-        let isLiked = indexPath.row % 2 == 1
-        let likeImage = isLiked ? UIImage(named: "LikeButtonOn") : UIImage(named: "LikeButtonOff")
-        cell.likeButton.setImage(likeImage, for: .normal)
+        if let date = imagesListService.photos[indexPath.row].createdAt {
+            cell.dateLabel.text = dateFormatterUtil.string(from: date as Date).replacingOccurrences(of: "г.", with: "")
+        } else {
+            cell.dateLabel.text = ""
+        }
+        let isLiked = imagesListService.photos[indexPath.row].isLiked
+        cell.setIsLike(isLiked)
     }
 }
 
@@ -76,6 +70,7 @@ extension ImagesListViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         
+        imageListCell.delegate = self
         configCell(for: imageListCell, with: indexPath)
         
         return imageListCell
@@ -109,9 +104,6 @@ extension ImagesListViewController: UITableViewDelegate {
 }
 
 private extension ImagesListViewController {
-    func loadInitialPhotos() {
-        imagesListService.fetchPhotosNextPage()
-    }
     func imagesListObserve() {
         imagesListServiceObserver = NotificationCenter.default.addObserver(
             forName: ImagesListService.DidChangeNotification,
@@ -121,6 +113,7 @@ private extension ImagesListViewController {
             guard let self = self else { return }
             self.updateTableViewAnimated()
         }
+        imagesListService.fetchPhotosNextPage()
     }
     
     func updateTableViewAnimated() {
@@ -131,17 +124,34 @@ private extension ImagesListViewController {
             tableView.performBatchUpdates {
                 if oldCount < newCount {
                     let indexPaths = (oldCount..<newCount).map { i in
-                    IndexPath(row: i, section: 0)
-                }
-                tableView.insertRows(at: indexPaths, with: .automatic)
+                        IndexPath(row: i, section: 0)
+                    }
+                    tableView.insertRows(at: indexPaths, with: .automatic)
                 } else {
                     let indexPaths = (newCount..<oldCount).map { i in
-                    IndexPath(row: i, section: 0)
-                }
-                tableView.deleteRows(at: indexPaths, with: .automatic)
+                        IndexPath(row: i, section: 0)
+                    }
+                    tableView.deleteRows(at: indexPaths, with: .automatic)
                 }
             } completion: { _ in }
         }
     }
 }
 
+extension ImagesListViewController: ImageListCellDelegate {
+    func imagesListDidTapLike(_ cell: ImagesListCell) {
+        guard let indexPath = tableView.indexPath(for: cell) else { return }
+        let photo = photos[indexPath.row]
+        UIBlokingProgressHUD.show()
+        imagesListService.changeLike(photoId: photo.id, isLike: !photo.isLiked) { result in
+            switch result {
+            case .success:
+                self.photos = self.imagesListService.photos
+                cell.setIsLike(self.photos[indexPath.row].isLiked)
+                UIBlokingProgressHUD.dismiss()
+            case .failure:
+                UIBlokingProgressHUD.dismiss()
+            }
+        }
+    }
+}
