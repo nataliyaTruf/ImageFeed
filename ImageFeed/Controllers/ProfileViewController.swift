@@ -167,8 +167,8 @@ extension ProfileViewController {
         profileImageService.clearProfileImageData()
         imagesListService.clearImagesListData()
         
-        splashViewController.modalPresentationStyle = .fullScreen
-        present(splashViewController, animated: true, completion: nil)
+        guard let window = UIApplication.shared.windows.first else { fatalError("Invalid Configuration") }
+        window.rootViewController = splashViewController
     }
     func showLogoutAlert() {
         alertPresenter.showLogoutAlert() { [weak self] in
