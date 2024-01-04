@@ -64,6 +64,7 @@ final class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = UIColor.ypBlack
         addSubviews()
         makeConstraints()
         updateProfileDetails()
@@ -123,7 +124,7 @@ extension ProfileViewController {
     func profileImageObserve() {
         profileImageServiceObserver = NotificationCenter.default
             .addObserver(
-                forName: ProfileImageService.DidChangeNotification,
+                forName: ProfileImageService.didChangeNotification,
                 object: nil,
                 queue: .main
             ) { [weak self] _ in

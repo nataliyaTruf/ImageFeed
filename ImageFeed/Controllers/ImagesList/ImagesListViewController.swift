@@ -11,9 +11,11 @@ import Kingfisher
 final class ImagesListViewController: UIViewController {
     private(set) var photos: [Photo] = []
     private let imagesListService = ImagesListService.shared
+    private let dateFormater = CustomDateFormatters.shared.dateFormatter
+    
     private var isInitialDataLoaded = false
     private var imagesListServiceObserver: NSObjectProtocol?
-    private let ShowSingleImageSegueIdentifier = "ShowSingleImage"
+    private let showSingleImageSegueIdentifier = "ShowSingleImage"
     @IBOutlet private var tableView: UITableView!
     
     override func viewDidLoad() {
@@ -24,9 +26,10 @@ final class ImagesListViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == ShowSingleImageSegueIdentifier {
-            let viewController = segue.destination as! SingleImageViewController
-            let indexPath = sender as! IndexPath
+        if segue.identifier == showSingleImageSegueIdentifier,
+           let viewController = segue.destination as? SingleImageViewController,
+           let indexPath = sender as? IndexPath,
+           indexPath.row < photos.count {
             let photo = photos[indexPath.row]
             if let fullImageURL = URL(string: photo.largeImageURL) {
                 viewController.fullImageURL = fullImageURL
@@ -38,7 +41,7 @@ final class ImagesListViewController: UIViewController {
     
     private func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
         let photo = photos[indexPath.row]
-        if let imageURL = URL(string: photo.thumbImageURL) {
+        if let imageURL = URL(string: photo.smallImageURL) { // заменила thumbImageURL на smallImageURL из-за низкого качества thumb
             cell.cellImage.kf.indicatorType = .activity
             cell.cellImage.kf.setImage(
                 with: imageURL,
@@ -49,7 +52,7 @@ final class ImagesListViewController: UIViewController {
             )
         }
         if let date = imagesListService.photos[indexPath.row].createdAt {
-            cell.dateLabel.text = dateFormatterUtil.string(from: date as Date).replacingOccurrences(of: "г.", with: "")
+            cell.dateLabel.text = dateFormater.string(from: date as Date).replacingOccurrences(of: "г.", with: "")
         } else {
             cell.dateLabel.text = ""
         }
@@ -79,7 +82,7 @@ extension ImagesListViewController: UITableViewDataSource {
 
 extension ImagesListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: ShowSingleImageSegueIdentifier, sender: indexPath)
+        performSegue(withIdentifier: showSingleImageSegueIdentifier, sender: indexPath)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -106,7 +109,7 @@ extension ImagesListViewController: UITableViewDelegate {
 private extension ImagesListViewController {
     func imagesListObserve() {
         imagesListServiceObserver = NotificationCenter.default.addObserver(
-            forName: ImagesListService.DidChangeNotification,
+            forName: ImagesListService.didChangeNotification,
             object: nil,
             queue: .main
         ) { [weak self] _ in

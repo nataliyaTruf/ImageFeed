@@ -9,7 +9,7 @@ import Foundation
 
 final class ProfileImageService {
     static let shared = ProfileImageService()
-    static let DidChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")
+    static let didChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")
     private let urlSession = URLSession.shared
     private let requestBuilder = URLRequestBuilder.shared
     private(set) var avatarURL: String?
@@ -32,10 +32,9 @@ final class ProfileImageService {
             case .success(let profilPhoto):
                 guard let profileImageURLString = profilPhoto.profileImage?.large else { return } // поменяла размер на large
                 self.avatarURL = profileImageURLString
-                // completion(.success(profileImageURLString))
                 NotificationCenter.default
                     .post(
-                        name: ProfileImageService.DidChangeNotification,
+                        name: ProfileImageService.didChangeNotification,
                         object: self,
                         userInfo: ["URL": profileImageURLString])
                 self.task = nil

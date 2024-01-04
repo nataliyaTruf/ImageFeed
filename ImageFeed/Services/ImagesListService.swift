@@ -9,18 +9,23 @@ import Foundation
 
 final class ImagesListService {
     static let shared = ImagesListService()
-    static let DidChangeNotification = Notification.Name(rawValue: "ImagesListServiceDidChange")
+    static let didChangeNotification = Notification.Name(rawValue: "ImagesListServiceDidChange")
     private let urlSession = URLSession.shared
     private let requestBuilder = URLRequestBuilder.shared
     private var task: URLSessionTask?
     private(set) var photos: [Photo] = []
     private var lastLoadedPage: Int?
+    private var nextPage: Int = 0
     
     private init() {}
     
     func fetchPhotosNextPage() {
         guard task == nil else { return }
-        let nextPage = lastLoadedPage == nil ? 1 : lastLoadedPage! + 1
+        if let lastLoadedPage = lastLoadedPage {
+            nextPage = lastLoadedPage + 1
+        } else {
+            nextPage = 1 }
+        
         guard let request = photosRequest(page: nextPage, perPage: 10) else {
             assertionFailure("\(NetworkError.invalidRequest)")
             return
@@ -32,11 +37,11 @@ final class ImagesListService {
             case .success(let bodies):
                 let newPhotos = bodies.map { Photo(result: $0) }
                 self.photos.append(contentsOf: newPhotos)
-                self.lastLoadedPage = nextPage
+                self.lastLoadedPage = self.nextPage
                 self.task = nil
                 NotificationCenter.default
                     .post(
-                        name: ImagesListService.DidChangeNotification,
+                        name: ImagesListService.didChangeNotification,
                         object: self
                     )
             case .failure(let error):
@@ -66,6 +71,7 @@ final class ImagesListService {
                         welcomeDescription: photo.welcomeDescription,
                         thumbImageURL: photo.thumbImageURL,
                         largeImageURL: photo.largeImageURL,
+                        smallImageURL: photo.smallImageURL,
                         isLiked: !photo.isLiked
                     )
                     self.photos = self.photos.withReplaced(itemAt: index, newValue: newPhoto)
@@ -111,7 +117,7 @@ extension ImagesListService {
         task?.cancel()
         
         NotificationCenter.default.post(
-            name: ImagesListService.DidChangeNotification,
+            name: ImagesListService.didChangeNotification,
             object: self)
     }
 }
