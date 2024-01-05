@@ -49,6 +49,7 @@ final class ProfileViewController: UIViewController {
         descriptionLabel.text = "Hello, world!"
         descriptionLabel.textColor = .ypWhite
         descriptionLabel.font = UIFont.systemFont(ofSize: 13, weight: .regular)
+        descriptionLabel.numberOfLines = 0
         return descriptionLabel
     }()
     

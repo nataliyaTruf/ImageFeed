@@ -24,7 +24,8 @@ final class ImagesListService {
         if let lastLoadedPage = lastLoadedPage {
             nextPage = lastLoadedPage + 1
         } else {
-            nextPage = 1 }
+            nextPage = 1
+        }
         
         guard let request = photosRequest(page: nextPage, perPage: 10) else {
             assertionFailure("\(NetworkError.invalidRequest)")

@@ -15,7 +15,7 @@ final class CustomDateFormatters {
     private init() {
         iso8601DateFormatter = ISO8601DateFormatter()
         dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .long
-        dateFormatter.timeStyle = .none
+        dateFormatter.locale = Locale(identifier: "ru_RU")
+        dateFormatter.dateFormat = "dd MMMM yyyy"
     }
 }
