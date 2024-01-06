@@ -18,3 +18,16 @@ enum Constants {
     
     static let bearerToken = "BearerToken"
 }
+
+enum WebKeys {
+    static let clientID: String = "client_id"
+    static let redirectURI: String = "redirect_uri"
+    static let responseType: String = "response_type"
+    static let scope: String = "scope"
+}
+
+enum WebConstants {
+    static let authorizeURL: String = "https://unsplash.com/oauth/authorize"
+    static let code: String = "code"
+    static let authorizedPath: String = "/oauth/authorize/native"
+}
