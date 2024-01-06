@@ -36,14 +36,6 @@ final class WebViewViewController: UIViewController & WebViewViewControllerProto
         presenter?.viewDidLoad()
     }
     
-    func load(request: URLRequest) {
-        webView.load(request)
-    }
-    
-    @IBAction func didTapBackButton(_ sender: Any) {
-        delegate?.webViewViewControllerDidCancel(self)
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         estimatedProgressObservation = webView.observe(
@@ -55,12 +47,20 @@ final class WebViewViewController: UIViewController & WebViewViewControllerProto
         }
     }
     
+    func load(request: URLRequest) {
+        webView.load(request)
+    }
+    
     func setProgressValue(_ newValue: Float) {
         progressView.progress = newValue
     }
     
     func setProgressHidden(_ isHidden: Bool) {
         progressView.isHidden = isHidden
+    }
+    
+    @IBAction func didTapBackButton(_ sender: Any) {
+        delegate?.webViewViewControllerDidCancel(self)
     }
 }
 
