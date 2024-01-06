@@ -2,7 +2,7 @@
 //  SplashViewController.swift
 //  ImageFeed
 //
-//  Created by Nataliya MASSOL on 25/09/2023.
+//  Created by Created by Nataliya TRUFANOVA on 25/09/2023.
 //
 
 import UIKit
@@ -116,7 +116,7 @@ extension SplashViewController: AuthViewControllerDelegate {
             case .success:
                 UIBlokingProgressHUD.dismiss()
                 guard let username = self.profileServive.profile?.username else { return }
-                self.profileImageService.fetchProfileImageURL(username: username) { _ in }
+                self.profileImageService.fetchProfileImageURL(username: username)
                 self.switchToTabBarController()
             case .failure(let error):
                 UIBlokingProgressHUD.dismiss()

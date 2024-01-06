@@ -2,7 +2,7 @@
 //  ProfileViewController.swift
 //  ImageFeed
 //
-//  Created by Nataliya MASSOL on 18/08/2023.
+//  Created by Created by Nataliya TRUFANOVA on 18/08/2023.
 //
 
 import UIKit
@@ -12,6 +12,10 @@ final class ProfileViewController: UIViewController {
     private let profileService = ProfileService.shared
     private let profileImageService = ProfileImageService.shared
     private var profileImageServiceObserver: NSObjectProtocol?
+    private var imagesListService = ImagesListService.shared
+    private var token = OAuth2TokenStorage.shared
+    private let alertPresenter = AlertPresenter()
+    private let splashViewController = SplashViewController()
     
     // MARK: - UI Elements
     
@@ -45,6 +49,7 @@ final class ProfileViewController: UIViewController {
         descriptionLabel.text = "Hello, world!"
         descriptionLabel.textColor = .ypWhite
         descriptionLabel.font = UIFont.systemFont(ofSize: 13, weight: .regular)
+        descriptionLabel.numberOfLines = 0
         return descriptionLabel
     }()
     
@@ -52,6 +57,7 @@ final class ProfileViewController: UIViewController {
         let logoutButton = UIButton()
         let logoutButtonImage = UIImage(named: "logout_button")
         logoutButton.setImage(logoutButtonImage, for: .normal)
+        logoutButton.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
         return logoutButton
     }()
     
@@ -59,11 +65,14 @@ final class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = UIColor.ypBlack
         addSubviews()
         makeConstraints()
         updateProfileDetails()
-        profileImageObserver()
+        profileImageObserve()
         updateAvatar()
+        
+        alertPresenter.delegate = self
     }
     
     // MARK: - Private Methods
@@ -107,17 +116,16 @@ final class ProfileViewController: UIViewController {
         ])
     }
     
-    @objc
-    private func didTapButton() {
-        
+    @objc private func didTapButton() {
+        showLogoutAlert()
     }
 }
 
-private extension ProfileViewController {
-    func profileImageObserver() {
+extension ProfileViewController {
+    func profileImageObserve() {
         profileImageServiceObserver = NotificationCenter.default
             .addObserver(
-                forName: ProfileImageService.DidChangeNotification,
+                forName: ProfileImageService.didChangeNotification,
                 object: nil,
                 queue: .main
             ) { [weak self] _ in
@@ -150,5 +158,23 @@ private extension ProfileViewController {
         let cache = ImageCache.default
         cache.clearMemoryCache()
         cache.clearDiskCache()
+    }
+}
+
+extension ProfileViewController {
+    private func performLogautAndSwitchToSplashView() {
+        WebViewViewController.clean()
+        token.clearTokenData()
+        profileService.clearProfileData()
+        profileImageService.clearProfileImageData()
+        imagesListService.clearImagesListData()
+        
+        guard let window = UIApplication.shared.windows.first else { fatalError("Invalid Configuration") }
+        window.rootViewController = splashViewController
+    }
+    func showLogoutAlert() {
+        alertPresenter.showLogoutAlert() { [weak self] in
+            self?.performLogautAndSwitchToSplashView()
+        }
     }
 }
