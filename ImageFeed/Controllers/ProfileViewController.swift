@@ -8,14 +8,16 @@
 import UIKit
 import Kingfisher
 
-final class ProfileViewController: UIViewController {
-    private let profileService = ProfileService.shared
-    private let profileImageService = ProfileImageService.shared
-    private var profileImageServiceObserver: NSObjectProtocol?
-    private var imagesListService = ImagesListService.shared
-    private var token = OAuth2TokenStorage.shared
+protocol ProfileViewControllerProtocol: AnyObject {
+    var presenter: ProfileViewPresenterProtocol? { get set }
+    func updateProfileDetails(name: String, loginName: String, bio: String?)
+    func updateAvatar(with url: URL)
+    func showLogoutAlert()
+}
+
+final class ProfileViewController: UIViewController & ProfileViewControllerProtocol {
+    var presenter: ProfileViewPresenterProtocol?
     private let alertPresenter = AlertPresenter()
-    private let splashViewController = SplashViewController()
     
     // MARK: - UI Elements
     
@@ -68,10 +70,10 @@ final class ProfileViewController: UIViewController {
         view.backgroundColor = UIColor.ypBlack
         addSubviews()
         makeConstraints()
-        updateProfileDetails()
-        profileImageObserve()
-        updateAvatar()
         
+        self.presenter = ProfileViewPresenter()
+        self.presenter?.view = self
+        presenter?.setupProfile()
         alertPresenter.delegate = self
     }
     
@@ -122,32 +124,13 @@ final class ProfileViewController: UIViewController {
 }
 
 extension ProfileViewController {
-    func profileImageObserve() {
-        profileImageServiceObserver = NotificationCenter.default
-            .addObserver(
-                forName: ProfileImageService.didChangeNotification,
-                object: nil,
-                queue: .main
-            ) { [weak self] _ in
-                guard let self = self else { return }
-                self.updateAvatar()
-            }
+    func updateProfileDetails(name: String, loginName: String, bio: String?) {
+        nameLabel.text = name
+        loginNameLabel.text = loginName
+        descriptionLabel.text = bio
     }
     
-    func updateProfileDetails() {
-        guard let profile = profileService.profile
-        else { assertionFailure("no saved profile")
-            return }
-        nameLabel.text = profile.name
-        loginNameLabel.text = profile.loginName
-        descriptionLabel.text = profile.bio
-    }
-    
-    func updateAvatar() {
-        guard
-            let profileImageURLString = profileImageService.avatarURL,
-            let url = URL(string: profileImageURLString)
-        else { return }
+    func updateAvatar(with url: URL) {
         let processor = RoundCornerImageProcessor(cornerRadius: 70, backgroundColor: .clear)
         avatarImageView.kf.indicatorType = .activity
         avatarImageView.kf.setImage(
@@ -162,19 +145,9 @@ extension ProfileViewController {
 }
 
 extension ProfileViewController {
-    private func performLogautAndSwitchToSplashView() {
-        WebViewViewController.clean()
-        token.clearTokenData()
-        profileService.clearProfileData()
-        profileImageService.clearProfileImageData()
-        imagesListService.clearImagesListData()
-        
-        guard let window = UIApplication.shared.windows.first else { fatalError("Invalid Configuration") }
-        window.rootViewController = splashViewController
-    }
     func showLogoutAlert() {
         alertPresenter.showLogoutAlert() { [weak self] in
-            self?.performLogautAndSwitchToSplashView()
+            self?.presenter?.performLogautAndSwitchToSplashView()
         }
     }
 }

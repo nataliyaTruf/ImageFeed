@@ -9,21 +9,21 @@ import Foundation
 
 enum Constants {
     
-    // Unsplash API
+    // MARK: -Unsplash API
     static let accessKey: String = "YIdDeipnqmyFrGPIPRGkH_xyqPr1WoZTsiBUG24Ug7c"
     static let secretKey: String = "35jhiuXM_bBuBfVw4WstuCw9TPNLFw88vYx5FCj8p1Q"
     static let redirectURI: String = "urn:ietf:wg:oauth:2.0:oob"
     static let accessScope: String = "public+read_user+write_likes"
     
-    // URLs
+    // MARK: - URLs
     static let defaultApiBaseURLString: String = "https://api.unsplash.com"
     static let baseURLString: String = "https://unsplash.com"
     static let authorizeURL: String = "https://unsplash.com/oauth/authorize"
     
-    // Storage
+    // MARK: - Storage
     static let bearerToken = "BearerToken"
     
-    // Request Parameters
+    // MARK: - Request Parameters
     static let clientID: String = "client_id"
     static let redirect: String = "redirect_uri"
     static let responseType: String = "response_type"
