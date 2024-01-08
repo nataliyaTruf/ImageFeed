@@ -8,13 +8,32 @@
 import UIKit
 
 class NavigationService {
-    let splashViewController = SplashViewController()
     static let shared = NavigationService()
+    private let splashViewController = SplashViewController()
+//    private let showSingleImageSegueIdentifier = "ShowSingleImage"
+    
+    private init() {}
     
     func switchToSplashView() {
         DispatchQueue.main.async {
             guard let window = UIApplication.shared.windows.first else { fatalError("Invalid Configuration") }
             window.rootViewController = self.splashViewController
+        }
+    }
+    
+    func presentSingleImage(from viewController: UIViewController?, withPhoto photo: Photo) {
+        guard let viewController = viewController else {
+            print("NavigationService Error: viewController is nil")
+            return
+        }
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if let singleImageVC = storyboard.instantiateViewController(withIdentifier: "SingleImageViewController") as? SingleImageViewController {
+            singleImageVC.fullImageURL = URL(string: photo.largeImageURL)
+            singleImageVC.modalPresentationStyle = .fullScreen
+            
+            viewController.present(singleImageVC, animated: true)
+        } else {
+            print("NavigationService Error: не получилось установить SingleImageViewController")
         }
     }
 }

@@ -73,7 +73,7 @@ final class ProfileViewController: UIViewController & ProfileViewControllerProto
         
         self.presenter = ProfileViewPresenter()
         self.presenter?.view = self
-        presenter?.setupProfile()
+        presenter?.viewDidLoad()
         alertPresenter.delegate = self
     }
     

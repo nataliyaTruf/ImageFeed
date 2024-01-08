@@ -9,14 +9,13 @@ import Foundation
 
 protocol ProfileViewPresenterProtocol: AnyObject {
     var view: ProfileViewControllerProtocol? { get set }
-    func setupProfile()
+    func viewDidLoad()
     func observeProfileImageChanges()
     func performLogautAndSwitchToSplashView()
 }
 
 final class ProfileViewPresenter: ProfileViewPresenterProtocol {
-    var view: ProfileViewControllerProtocol?
-    
+    weak var view: ProfileViewControllerProtocol?
     private let profileService = ProfileService.shared
     private let profileImageService = ProfileImageService.shared
     private var profileImageServiceObserver: NSObjectProtocol?
@@ -25,7 +24,7 @@ final class ProfileViewPresenter: ProfileViewPresenterProtocol {
     
     // MARK: - ProfileViewPresenterProtocol methods
     
-    func setupProfile() {
+    func viewDidLoad() {
         observeProfileImageChanges()
         updateProfileDetails()
         updateAvatar()
@@ -72,5 +71,11 @@ final class ProfileViewPresenter: ProfileViewPresenterProtocol {
             let url = URL(string: profileImageURLString)
         else { return }
         view?.updateAvatar(with: url)
+    }
+    
+    deinit {
+        if let observer = profileImageServiceObserver {
+            NotificationCenter.default.removeObserver(observer)
+        }
     }
 }
