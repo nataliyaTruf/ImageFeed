@@ -10,7 +10,7 @@ import UIKit
 class NavigationService {
     static let shared = NavigationService()
     private let splashViewController = SplashViewController()
-//    private let showSingleImageSegueIdentifier = "ShowSingleImage"
+    //    private let showSingleImageSegueIdentifier = "ShowSingleImage"
     
     private init() {}
     

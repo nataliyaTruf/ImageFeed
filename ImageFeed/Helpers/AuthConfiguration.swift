@@ -40,6 +40,7 @@ struct AuthConfiguration {
     let defaultApiBaseURLString: String
     let baseURLString: String
     let authorizeURL: String
+    let code: String
     
     static var standard: AuthConfiguration {
         return AuthConfiguration(
@@ -49,7 +50,8 @@ struct AuthConfiguration {
             accessScope: Constants.accessScope,
             defaultApiBaseURLString: Constants.defaultApiBaseURLString,
             baseURLString: Constants.baseURLString,
-            authorizeURL: Constants.authorizeURL
+            authorizeURL: Constants.authorizeURL,
+            code: Constants.code
         )
     }
 }
