@@ -7,14 +7,14 @@
 
 import Foundation
 
-protocol ProfileViewPresenterProtocol: AnyObject {
+protocol ProfilePresenterProtocol: AnyObject {
     var view: ProfileViewControllerProtocol? { get set }
-    func viewDidLoad()
+    func setup()
     func observeProfileImageChanges()
     func performLogautAndSwitchToSplashView()
 }
 
-final class ProfileViewPresenter: ProfileViewPresenterProtocol {
+final class ProfilePresenter: ProfilePresenterProtocol {
     weak var view: ProfileViewControllerProtocol?
     private let profileService = ProfileService.shared
     private let profileImageService = ProfileImageService.shared
@@ -24,7 +24,7 @@ final class ProfileViewPresenter: ProfileViewPresenterProtocol {
     
     // MARK: - ProfileViewPresenterProtocol methods
     
-    func viewDidLoad() {
+    func setup() {
         observeProfileImageChanges()
         updateProfileDetails()
         updateAvatar()
@@ -56,7 +56,8 @@ final class ProfileViewPresenter: ProfileViewPresenterProtocol {
     
     private func updateProfileDetails() {
         guard let profile = profileService.profile
-        else { assertionFailure("no saved profile")
+        else {
+            print("Profile not found. Redirecting to login...")
             return }
         view?.updateProfileDetails(
             name: profile.name,

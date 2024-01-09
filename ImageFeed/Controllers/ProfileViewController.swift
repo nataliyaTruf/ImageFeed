@@ -9,19 +9,19 @@ import UIKit
 import Kingfisher
 
 protocol ProfileViewControllerProtocol: AnyObject {
-    var presenter: ProfileViewPresenterProtocol? { get set }
+    var presenter: ProfilePresenterProtocol? { get set }
     func updateProfileDetails(name: String, loginName: String, bio: String?)
     func updateAvatar(with url: URL)
     func showLogoutAlert()
 }
 
 final class ProfileViewController: UIViewController & ProfileViewControllerProtocol {
-    var presenter: ProfileViewPresenterProtocol?
-    private let alertPresenter = AlertPresenter()
+    var presenter: ProfilePresenterProtocol?
+    var alertPresenter = AlertPresenter()
     
     // MARK: - UI Elements
     
-    private lazy var avatarImageView: UIImageView = {
+    lazy var avatarImageView: UIImageView = {
         let avatarImage = UIImage(named: "Avatar")
         let avatarImageView = UIImageView(image: avatarImage)
         avatarImageView.backgroundColor = .clear
@@ -30,7 +30,7 @@ final class ProfileViewController: UIViewController & ProfileViewControllerProto
         return avatarImageView
     }()
     
-    private lazy var nameLabel: UILabel = {
+    lazy var nameLabel: UILabel = {
         let nameLabel = UILabel()
         nameLabel.text = "Екатерина Новикова"
         nameLabel.textColor = .ypWhite
@@ -38,7 +38,7 @@ final class ProfileViewController: UIViewController & ProfileViewControllerProto
         return nameLabel
     }()
     
-    private lazy var loginNameLabel: UILabel = {
+    lazy var loginNameLabel: UILabel = {
         let loginNameLabel = UILabel()
         loginNameLabel.text = "@ekaterina_nov"
         loginNameLabel.textColor = .ypWhite
@@ -46,7 +46,7 @@ final class ProfileViewController: UIViewController & ProfileViewControllerProto
         return loginNameLabel
     }()
     
-    private lazy var descriptionLabel: UILabel = {
+    lazy var descriptionLabel: UILabel = {
         let descriptionLabel = UILabel()
         descriptionLabel.text = "Hello, world!"
         descriptionLabel.textColor = .ypWhite
@@ -71,9 +71,9 @@ final class ProfileViewController: UIViewController & ProfileViewControllerProto
         addSubviews()
         makeConstraints()
         
-        self.presenter = ProfileViewPresenter()
-        self.presenter?.view = self
-        presenter?.viewDidLoad()
+//        self.presenter = ProfilePresenter()
+//        self.presenter?.view = self
+        presenter?.setup()
         alertPresenter.delegate = self
     }
     
@@ -118,7 +118,7 @@ final class ProfileViewController: UIViewController & ProfileViewControllerProto
         ])
     }
     
-    @objc private func didTapButton() {
+    @objc func didTapButton() {
         showLogoutAlert()
     }
 }
@@ -149,5 +149,9 @@ extension ProfileViewController {
         alertPresenter.showLogoutAlert() { [weak self] in
             self?.presenter?.performLogautAndSwitchToSplashView()
         }
+    }
+    func configure(_ presenter: ProfilePresenterProtocol) {
+        self.presenter = presenter
+        presenter.view = self
     }
 }

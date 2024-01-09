@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class AlertPresenter {
+class AlertPresenter {
     weak var delegate: UIViewController?
     
     func showAlert(
