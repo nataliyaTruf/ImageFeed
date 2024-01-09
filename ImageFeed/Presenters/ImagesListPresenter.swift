@@ -7,21 +7,21 @@
 
 import Foundation
 
-protocol ImagesListViewPresenterProtocol: AnyObject {
+protocol ImagesListPresenterProtocol: AnyObject {
     var view: ImagesListViewControllerProtocol? { get set }
-    var photos: [Photo] { get }
+    var photos: [Photo] { get set }
     func viewDidLoad()
     func didSelectRow(at indexPath: IndexPath)
     func willDisplayRow(at indexPath: IndexPath)
     func didTapLikeButton(at index: Int)
 }
 
-final class ImagesListViewPresenter: ImagesListViewPresenterProtocol {
+final class ImagesListPresenter: ImagesListPresenterProtocol {
     weak var view: ImagesListViewControllerProtocol?
     
     private var imagesListServiceObserver: NSObjectProtocol?
     private let imagesListService = ImagesListService.shared
-    private(set) var photos: [Photo] = []
+    var photos: [Photo] = []
     
     func viewDidLoad() {
         observePhotoListChanges()
@@ -39,7 +39,7 @@ final class ImagesListViewPresenter: ImagesListViewPresenterProtocol {
         }
         imagesListService.fetchPhotosNextPage()
     }
-    private func updateTableViewAnimated() {
+    func updateTableViewAnimated() {
         let oldCount = self.photos.count
         let newPhotos = self.imagesListService.photos
         let newCount = newPhotos.count
@@ -73,6 +73,10 @@ final class ImagesListViewPresenter: ImagesListViewPresenterProtocol {
             switch result {
             case .success:
                 self.photos = self.imagesListService.photos
+                guard index < self.photos.count else {
+                    UIBlokingProgressHUD.dismiss()
+                    return
+                }
                 let isLiked = self.photos[index].isLiked
                 self.view?.updateLikeStatus(at: index, isLiked: isLiked)
                 UIBlokingProgressHUD.dismiss()

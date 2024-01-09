@@ -73,7 +73,7 @@ final class ProfileViewController: UIViewController & ProfileViewControllerProto
         
 //        self.presenter = ProfilePresenter()
 //        self.presenter?.view = self
-        presenter?.setup()
+        presenter?.viewDidLoad()
         alertPresenter.delegate = self
     }
     
@@ -150,6 +150,7 @@ extension ProfileViewController {
             self?.presenter?.performLogautAndSwitchToSplashView()
         }
     }
+    
     func configure(_ presenter: ProfilePresenterProtocol) {
         self.presenter = presenter
         presenter.view = self

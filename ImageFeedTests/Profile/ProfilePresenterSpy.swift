@@ -16,7 +16,7 @@ final class ProfilePresenterSpy: ProfilePresenterProtocol {
     var performLogoutCalled = false
     var showLogoutAlertCalled = false
     
-    func setup() {
+    func viewDidLoad() {
         viewDidLoadCalled = true
     }
     

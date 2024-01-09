@@ -12,7 +12,12 @@ final class TabBarController: UITabBarController {
         super.awakeFromNib()
         let storyboard = UIStoryboard(name: "Main", bundle: .main)
         
-        let imagesListViewController = storyboard.instantiateViewController(withIdentifier: "ImagesListViewController")
+        guard let imagesListViewController = storyboard.instantiateViewController(withIdentifier: "ImagesListViewController")as? ImagesListViewController else { print ("Не удалось создать ImagesListViewController")
+            return }
+         
+        let imagesListPresenter = ImagesListPresenter()
+            imagesListViewController.configurePresenter(imagesListPresenter)
+        
         let profileViewController = ProfileViewController()
         profileViewController.configure(ProfilePresenter())
         profileViewController.tabBarItem = UITabBarItem(

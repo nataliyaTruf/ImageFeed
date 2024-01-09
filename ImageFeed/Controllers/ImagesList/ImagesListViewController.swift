@@ -9,14 +9,14 @@ import UIKit
 import Kingfisher
 
 protocol ImagesListViewControllerProtocol: AnyObject {
-    var presenter: ImagesListViewPresenterProtocol? { get set }
+    var presenter: ImagesListPresenterProtocol? { get set }
     func updateTableViewAnimated(oldCount: Int, newCount: Int)
     func updateLikeStatus(at index: Int, isLiked: Bool)
     func getCurrentViewController() -> UIViewController?
 }
 
 final class ImagesListViewController: UIViewController & ImagesListViewControllerProtocol {
-    var presenter: ImagesListViewPresenterProtocol?
+    var presenter: ImagesListPresenterProtocol?
     
     private let dateFormater = CustomDateFormatters.shared.dateFormatter
     
@@ -24,8 +24,8 @@ final class ImagesListViewController: UIViewController & ImagesListViewControlle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        presenter = ImagesListViewPresenter()
-        presenter?.view = self
+        //presenter = ImagesListPresenter()
+        //presenter?.view = self
         presenter?.viewDidLoad()
         
         tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
@@ -33,6 +33,11 @@ final class ImagesListViewController: UIViewController & ImagesListViewControlle
     
     func getCurrentViewController() -> UIViewController? {
         return self
+    }
+    
+    func configurePresenter(_ presenter: ImagesListPresenterProtocol) {
+        self.presenter = presenter
+        presenter.view = self
     }
 }
 

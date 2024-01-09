@@ -9,7 +9,7 @@ import Foundation
 
 protocol ProfilePresenterProtocol: AnyObject {
     var view: ProfileViewControllerProtocol? { get set }
-    func setup()
+    func viewDidLoad()
     func observeProfileImageChanges()
     func performLogautAndSwitchToSplashView()
 }
@@ -24,7 +24,7 @@ final class ProfilePresenter: ProfilePresenterProtocol {
     
     // MARK: - ProfileViewPresenterProtocol methods
     
-    func setup() {
+    func viewDidLoad() {
         observeProfileImageChanges()
         updateProfileDetails()
         updateAvatar()

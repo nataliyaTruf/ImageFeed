@@ -7,10 +7,14 @@
 
 import UIKit
 
-class NavigationService {
-    static let shared = NavigationService()
+protocol NavigationServiceProtocol {
+    func switchToSplashView()
+    func presentSingleImage(from viewController: UIViewController?, withPhoto photo: Photo)
+}
+
+final class NavigationService: NavigationServiceProtocol {
+    static var shared: NavigationServiceProtocol = NavigationService()
     private let splashViewController = SplashViewController()
-    //    private let showSingleImageSegueIdentifier = "ShowSingleImage"
     
     private init() {}
     
