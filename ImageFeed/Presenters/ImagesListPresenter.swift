@@ -10,6 +10,7 @@ import Foundation
 protocol ImagesListPresenterProtocol: AnyObject {
     var view: ImagesListViewControllerProtocol? { get set }
     var photos: [Photo] { get set }
+    var imagesListService: ImagesListServiceProtocol { get set }
     func viewDidLoad()
     func didSelectRow(at indexPath: IndexPath)
     func willDisplayRow(at indexPath: IndexPath)
@@ -20,7 +21,7 @@ final class ImagesListPresenter: ImagesListPresenterProtocol {
     weak var view: ImagesListViewControllerProtocol?
     
     private var imagesListServiceObserver: NSObjectProtocol?
-    private let imagesListService = ImagesListService.shared
+    var imagesListService = ImagesListService.shared
     var photos: [Photo] = []
     
     func viewDidLoad() {

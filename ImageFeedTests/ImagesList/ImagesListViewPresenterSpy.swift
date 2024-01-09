@@ -9,6 +9,8 @@
 import Foundation
 
 final class ImagesListViewPresenterSpy: ImagesListPresenterProtocol {
+    var imagesListService: ImageFeed.ImagesListServiceProtocol = ImagesListService.shared
+    
     var view: ImageFeed.ImagesListViewControllerProtocol?
     
     var viewDidLoadCalled = false

@@ -24,8 +24,6 @@ final class ImagesListViewController: UIViewController & ImagesListViewControlle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //presenter = ImagesListPresenter()
-        //presenter?.view = self
         presenter?.viewDidLoad()
         
         tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
@@ -82,7 +80,13 @@ extension ImagesListViewController: UITableViewDelegate {
         willDisplay cell: UITableViewCell,
         forRowAt indexPath: IndexPath
     ) {
-        presenter?.willDisplayRow(at: indexPath)
+        // MARK: disable pagination for UI test (ImagesFeedUITests)
+        let testMode = ProcessInfo.processInfo.arguments.contains("testMode")
+        if testMode {
+            print(presenter?.imagesListService.photos.count as Any)
+        } else {
+            presenter?.willDisplayRow(at: indexPath)
+        }
     }
 }
 
