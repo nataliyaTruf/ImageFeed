@@ -25,12 +25,12 @@ class AuthHelper: AuthHelperProtocol {
     }
     
     func authURL() -> URL {
-        var urlComponents = URLComponents(string: Constants.authorizeURL)
+        var urlComponents = URLComponents(string: AuthConfiguration.standard.authorizeURL)
         urlComponents?.queryItems = [
-            URLQueryItem(name: Constants.clientID, value: Constants.accessKey),
-            URLQueryItem(name: Constants.redirect, value: Constants.redirectURI),
-            URLQueryItem(name: Constants.responseType, value: Constants.code),
-            URLQueryItem(name: Constants.scope, value: Constants.accessScope)
+            URLQueryItem(name: AuthConfiguration.standard.clientID, value: AuthConfiguration.standard.accessKey),
+            URLQueryItem(name: AuthConfiguration.standard.redirect, value: AuthConfiguration.standard.redirectURI),
+            URLQueryItem(name: AuthConfiguration.standard.responseType, value: AuthConfiguration.standard.code),
+            URLQueryItem(name: AuthConfiguration.standard.scope, value: AuthConfiguration.standard.accessScope)
         ]
         if let url = urlComponents?.url {
             return url
@@ -41,8 +41,8 @@ class AuthHelper: AuthHelperProtocol {
     
     func fetchCode(from url: URL) -> String? {
         guard let components = URLComponents(string: url.absoluteString),
-              components.path == Constants.authorizedPath,
-              let codeItem = components.queryItems?.first(where: { $0.name == Constants.code})
+              components.path == AuthConfiguration.standard.authorizedPath,
+              let codeItem = components.queryItems?.first(where: { $0.name == AuthConfiguration.standard.code})
         else { return nil }
         
         return codeItem.value

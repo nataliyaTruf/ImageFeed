@@ -13,12 +13,18 @@ final class AlertPresenterMock: AlertPresenter {
     var showRetryAlertCalled = false
     var showLogoutAlertCalled = false
     
-    override func showAlert(title: String, message: String, handler: @escaping () -> Void) {
-        showAlertCalled = true
-        handler()
-    }
+    override func showAlert(
+        title: String,
+        message: String,
+        handler: @escaping () -> Void) {
+            showAlertCalled = true
+            handler()
+        }
     
-    override func showRetryAllert(title: String, message: String, retryHandler: @escaping () -> Void) {
+    override func showRetryAllert(title: String,
+                                  message: String,
+                                  retryHandler: @escaping () -> Void
+    ) {
         showRetryAlertCalled = true
         retryHandler()
     }

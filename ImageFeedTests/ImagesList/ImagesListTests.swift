@@ -62,8 +62,26 @@ final class ImagesListTests: XCTestCase {
     
     func testPresenterDidTapLikeButton() {
         // given
-        let photo1 = Photo(id: "1", size: CGSize(width: 100, height: 100), createdAt: Date(), welcomeDescription: "Description 1", thumbImageURL: "url1", largeImageURL: "url2", smallImageURL: "url3", isLiked: false)
-        let photo2 = Photo(id: "2", size: CGSize(width: 100, height: 100), createdAt: Date(), welcomeDescription: "Description 2", thumbImageURL: "url4", largeImageURL: "url5", smallImageURL: "url6", isLiked: true)
+        let photo1 = Photo(
+            id: "1",
+            size: CGSize(width: 100, height: 100),
+            createdAt: Date(),
+            welcomeDescription: "Description 1",
+            thumbImageURL: "url1",
+            largeImageURL: "url2",
+            smallImageURL: "url3",
+            isLiked: false
+        )
+        let photo2 = Photo(
+            id: "2",
+            size: CGSize(width: 100, height: 100),
+            createdAt: Date(),
+            welcomeDescription: "Description 2",
+            thumbImageURL: "url4",
+            largeImageURL: "url5",
+            smallImageURL: "url6",
+            isLiked: true
+        )
         
         serviceMock.photos = [photo1, photo2]
         presenter.photos = serviceMock.photos
@@ -77,8 +95,26 @@ final class ImagesListTests: XCTestCase {
     
     func testUpdateLikeStatus() {
         // given
-        let photo1 = Photo(id: "1", size: CGSize(width: 100, height: 100), createdAt: Date(), welcomeDescription: "Description 1", thumbImageURL: "url1", largeImageURL: "url2", smallImageURL: "url3", isLiked: false)
-        let photo2 = Photo(id: "2", size: CGSize(width: 100, height: 100), createdAt: Date(), welcomeDescription: "Description 2", thumbImageURL: "url4", largeImageURL: "url5", smallImageURL: "url6", isLiked: true)
+        let photo1 = Photo(
+            id: "1",
+            size: CGSize(width: 100, height: 100),
+            createdAt: Date(),
+            welcomeDescription: "Description 1",
+            thumbImageURL: "url1",
+            largeImageURL: "url2",
+            smallImageURL: "url3",
+            isLiked: false
+        )
+        let photo2 = Photo(
+            id: "2",
+            size: CGSize(width: 100, height: 100),
+            createdAt: Date(),
+            welcomeDescription: "Description 2",
+            thumbImageURL: "url4",
+            largeImageURL: "url5",
+            smallImageURL: "url6",
+            isLiked: true
+        )
         
         serviceMock.photos = [photo1, photo2]
         presenter.photos = serviceMock.photos
@@ -103,7 +139,16 @@ final class ImagesListTests: XCTestCase {
     
     func testDidSelectRow() {
         //given
-        let testPhoto = Photo(id: "1", size: CGSize(width: 100, height: 100), createdAt: Date(), welcomeDescription: "Test Description", thumbImageURL: "test_url1", largeImageURL: "test_url2", smallImageURL: "test_url3", isLiked: false)
+        let testPhoto = Photo(
+            id: "1",
+            size: CGSize(width: 100, height: 100),
+            createdAt: Date(),
+            welcomeDescription: "Test Description",
+            thumbImageURL: "test_url1",
+            largeImageURL: "test_url2",
+            smallImageURL: "test_url3",
+            isLiked: false
+        )
         serviceMock.photos = [testPhoto]
         
         presenter.photos = serviceMock.photos

@@ -14,9 +14,9 @@ final class ImagesListViewPresenterSpy: ImagesListPresenterProtocol {
     var view: ImageFeed.ImagesListViewControllerProtocol?
     
     var viewDidLoadCalled = false
-        var didSelectRowCalled = false
-        var willDisplayRowCalled = false
-        var didTapLikeButtonCalled = false
+    var didSelectRowCalled = false
+    var willDisplayRowCalled = false
+    var didTapLikeButtonCalled = false
     
     var photos: [ImageFeed.Photo] = []
     

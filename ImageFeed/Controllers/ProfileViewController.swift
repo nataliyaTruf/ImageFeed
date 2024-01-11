@@ -33,6 +33,7 @@ final class ProfileViewController: UIViewController & ProfileViewControllerProto
     lazy var nameLabel: UILabel = {
         let nameLabel = UILabel()
         nameLabel.text = "Екатерина Новикова"
+        nameLabel.accessibilityIdentifier = "nameLabel"
         nameLabel.textColor = .ypWhite
         nameLabel.font = UIFont.systemFont(ofSize: 23, weight: .bold)
         return nameLabel
@@ -41,6 +42,7 @@ final class ProfileViewController: UIViewController & ProfileViewControllerProto
     lazy var loginNameLabel: UILabel = {
         let loginNameLabel = UILabel()
         loginNameLabel.text = "@ekaterina_nov"
+        loginNameLabel.accessibilityIdentifier = "loginNameLabel"
         loginNameLabel.textColor = .ypWhite
         loginNameLabel.font = UIFont.systemFont(ofSize: 13, weight: .regular)
         return loginNameLabel
@@ -59,6 +61,7 @@ final class ProfileViewController: UIViewController & ProfileViewControllerProto
         let logoutButton = UIButton()
         let logoutButtonImage = UIImage(named: "logout_button")
         logoutButton.setImage(logoutButtonImage, for: .normal)
+        logoutButton.accessibilityIdentifier = "logout_button"
         logoutButton.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
         return logoutButton
     }()
@@ -71,8 +74,6 @@ final class ProfileViewController: UIViewController & ProfileViewControllerProto
         addSubviews()
         makeConstraints()
         
-//        self.presenter = ProfilePresenter()
-//        self.presenter?.view = self
         presenter?.viewDidLoad()
         alertPresenter.delegate = self
     }

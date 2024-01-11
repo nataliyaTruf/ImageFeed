@@ -2,7 +2,7 @@
 //  ImageFeedUITests.swift
 //  ImageFeedUITests
 //
-//  Created by Nataliya MASSOL on 09/01/2024.
+//  Created by Nataliya TRUFANOVA on 09/01/2024.
 //
 
 @testable import ImageFeed
@@ -13,8 +13,6 @@ final class ImageFeedUITests: XCTestCase {
     
     let login = ""
     let password = ""
-    let username = ""
-    let nickname = ""
     
     override func setUpWithError() throws {
         continueAfterFailure = false
@@ -23,23 +21,29 @@ final class ImageFeedUITests: XCTestCase {
     }
     
     func testAuth() throws {
-        app.buttons["Authenticate"].tap()
+        let authButton = app.buttons["Authenticate"]
+        if authButton.waitForExistence(timeout: 10) {
+            authButton.tap()
+        } else {
+            XCTFail("Authenticate button not found")
+        }
         
         let webView = app.webViews["UnsplashWebView"]
         
-        XCTAssertTrue(webView.waitForExistence(timeout: 5))
-
+        XCTAssertTrue(webView.waitForExistence(timeout: 10))
+        
         let loginTextField = webView.descendants(matching: .textField).element
-        XCTAssertTrue(loginTextField.waitForExistence(timeout: 5))
+        XCTAssertTrue(loginTextField.waitForExistence(timeout: 10))
         
         loginTextField.tap()
         loginTextField.typeText(login)
-        webView.swipeUp()
+        app.toolbars.buttons["Done"].tap()
         
         let passwordTextField = webView.descendants(matching: .secureTextField).element
-        XCTAssertTrue(passwordTextField.waitForExistence(timeout: 5))
+        XCTAssertTrue(passwordTextField.waitForExistence(timeout: 10))
         
         passwordTextField.tap()
+        
         passwordTextField.typeText(password)
         webView.swipeUp()
         
@@ -48,11 +52,12 @@ final class ImageFeedUITests: XCTestCase {
         let tablesQuery = app.tables
         let cell = tablesQuery.children(matching: .cell).element(boundBy: 0)
         
-        XCTAssertTrue(cell.waitForExistence(timeout: 5))
+        XCTAssertTrue(cell.waitForExistence(timeout: 10))
     }
     
     func testFeed() throws {
         let tablesQuery = app.tables
+        XCTAssertTrue(tablesQuery.firstMatch.waitForExistence(timeout: 10))
         
         let cell = tablesQuery.children(matching: .cell).element(boundBy: 0)
         cell.swipeUp()
@@ -60,17 +65,20 @@ final class ImageFeedUITests: XCTestCase {
         sleep(2)
         
         let cellToLike = tablesQuery.children(matching: .cell).element(boundBy: 1)
+        let likeButton = cellToLike.buttons["LikeButton"]
+        XCTAssertTrue(likeButton.waitForExistence(timeout: 10))
         
-        cellToLike.buttons["LikeButtonOff"].tap()
-        cellToLike.buttons["LikeButtonOn"].tap()
+        likeButton.tap()
+        sleep(4)
         
-        sleep(2)
+        likeButton.tap()
+        sleep(4)
         
         cellToLike.tap()
-        
-        sleep(2)
+        sleep(4)
         
         let image = app.scrollViews.images.element(boundBy: 0)
+        XCTAssertTrue(image.waitForExistence(timeout: 10))
         // Zoom in
         image.pinch(withScale: 3, velocity: 1) // zoom in
         // Zoom out
@@ -81,14 +89,24 @@ final class ImageFeedUITests: XCTestCase {
     }
     
     func testProfile() throws {
-        sleep(3)
+        sleep(5)
         app.tabBars.buttons.element(boundBy: 1).tap()
-       
-        XCTAssertTrue(app.staticTexts["Name Lastname"].exists)
-        XCTAssertTrue(app.staticTexts["@username"].exists)
         
-        app.buttons["logout_buttonn"].tap()
+        let nameLabel = app.staticTexts["nameLabel"]
+        let loginNameLabel = app.staticTexts["loginNameLabel"]
         
-        app.alerts["Пока, пока!"].scrollViews.otherElements.buttons["Да"].tap()
+        XCTAssertTrue(nameLabel.waitForExistence(timeout: 10))
+        XCTAssertTrue(loginNameLabel.waitForExistence(timeout: 10))
+        
+        let logoutButton = app.buttons["logout_button"]
+        XCTAssertTrue(logoutButton.waitForExistence(timeout: 10))
+        logoutButton.tap()
+        
+        let alertButton = app.alerts["Пока, пока!"].scrollViews.otherElements.buttons["Да"]
+        XCTAssertTrue(alertButton.waitForExistence(timeout: 10))
+        alertButton.tap()
+        
+        let authButton = app.buttons["Authenticate"]
+        XCTAssertTrue(authButton.waitForExistence(timeout: 10))
     }
 }

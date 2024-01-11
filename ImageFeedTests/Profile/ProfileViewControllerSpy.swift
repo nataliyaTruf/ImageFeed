@@ -21,11 +21,15 @@ final class ProfileViewControllerSpy: ProfileViewControllerProtocol {
     
     var showLogoutAlertCalled = false
     
-    func updateProfileDetails(name: String, loginName: String, bio: String?) {
+    func updateProfileDetails(
+        name: String,
+        loginName: String,
+        bio: String?
+    ) {
         updateProfileDetailsCalled = true
-                self.name = name
-                self.loginName = loginName
-                self.bio = bio
+        self.name = name
+        self.loginName = loginName
+        self.bio = bio
     }
     
     func updateAvatar(with url: URL) {
