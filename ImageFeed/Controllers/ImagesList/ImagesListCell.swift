@@ -49,7 +49,19 @@ extension ImagesListCell {
 extension ImagesListCell {
     override func prepareForReuse() {
         super.prepareForReuse()
-        
         cellImage.kf.cancelDownloadTask()
+    }
+}
+
+extension ImagesListCell {
+    func configure(with photo: Photo, isLiked: Bool) {
+        let imageURL = URL(string: photo.smallImageURL)
+        cellImage.kf.indicatorType = .activity
+        cellImage.kf.setImage(
+            with: imageURL,
+            placeholder: UIImage(named: "photos_placeholder")
+        )
+        dateLabel.text = photo.createdAt.map { CustomDateFormatters.shared.dateFormatter.string(from: $0).replacingOccurrences(of: "г.", with: "")}
+        setIsLike(isLiked)
     }
 }
